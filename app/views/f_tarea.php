@@ -5,11 +5,14 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tarea</title>
+    <title>Garden</title>
 </head>
 
 <body>
-<form action="">
+
+<h2>Tarea</h2>
+
+<form action="" method="POST">
     <table>
         <tr>
             <td><label for="descripcion">Descripción</label></td>
@@ -62,6 +65,9 @@
         <tr>
             <td><label for="anotacion_posterior">Anotación posterior</label></td>
             <td><input type="text" name="anotacion_posterior" id="anotacion_posterior"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Enviar"></td>
         </tr>
     </table>
 </form>
