@@ -33,6 +33,7 @@ class Usuario
     public function __construct1($id) {
         $this->id = $id;
         // TODO: OBTENER DATOS DE BD.
+        $bd = new mysqli()
     }
 
     public function getFullName() {
