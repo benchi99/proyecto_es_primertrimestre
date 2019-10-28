@@ -1,29 +1,30 @@
 <?php
+require '../config.php';
 
-// TODO: tirar a la basura toda esta clase, que le den
-class BD
-{
-    private $bd = null;
+class bd_gest {
 
-    public function __construct($host, $usuario, $contra, $esquema)
+    // TODO: Echar un vistazo a PDO.
+
+    private $base_datos;
+
+    public function __construct()
     {
-        $bd = new mysqli($host, $usuario, $contra, $esquema);
+        $this->base_datos = new mysqli("localhost", USUARIO, CONTRA, ESQUEMA);
 
-        if ($bd->connect_errno) {
-            echo '<p style="color: red;">Fallo al intentar conectar a MySQL: ('.$bd->connect_errno.') '.$bd->connect_error.'</p>';
-            unset($this);
+        if (!$this->base_datos->connect_errno) {
+            echo '<p style="color: red"> Falló la conexión a la base de datos: ('.
+                $this->base_datos->connect_errno.') '.$this->base_datos->connect_error.'.</p>';
         }
     }
 
-    public function consulta($columnas, $tabla, $condiciones, $ordenacion, $limite, $agrupa)
+    public function ejecuta_sql($sql)
     {
-        if (!$this->bd) {
-            echo '<p style="color: red;">No hay conexión a Base de Datos</p>';
+        $resultado_consulta = $this->base_datos->query($sql);
+
+        if (!$resultado_consulta) {
+            return false;
         } else {
-            $sentencia = $this->bd->prepare("SELECT ? FROM ? WHERE ?");
+            return $resultado_consulta;
         }
     }
-
-
-
 }

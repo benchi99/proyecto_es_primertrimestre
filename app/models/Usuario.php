@@ -1,5 +1,5 @@
 <?php
-
+require '../controllers/bd_gest.php';
 
 class Usuario
 {
@@ -32,8 +32,14 @@ class Usuario
 
     public function __construct1($id) {
         $this->id = $id;
-        // TODO: OBTENER DATOS DE BD.
-        $bd = new mysqli()
+        $bd = new bd_gest();
+
+        $datos_usuario = $bd->ejecuta_sql("SELECT * FROM pryt1_usuarios WHERE usr_id = '.$id.'");
+
+        foreach ($datos_usuario->fetch_assoc() as $fila) {
+            $this->nombre_usuario = $fila['usr_nombreusu'];
+            $this->nombre = $fila['usr_nombre'];
+        }
     }
 
     public function getFullName() {
