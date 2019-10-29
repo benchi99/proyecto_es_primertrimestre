@@ -1,30 +1,43 @@
 <?php
 require '../config.php';
 
-class bd_gest {
 
+class bd_gest {
     // TODO: Echar un vistazo a PDO.
 
-    private $base_datos;
+    private static $base_datos;
 
-    public function __construct()
+    private function __construct()
     {
-        $this->base_datos = new mysqli("localhost", USUARIO, CONTRA, ESQUEMA);
+        self::$base_datos = new mysqli("localhost", USUARIO, CONTRA, ESQUEMA);
 
-        if (!$this->base_datos->connect_errno) {
+        if (!self::$base_datos->connect_errno) {
             echo '<p style="color: red"> Falló la conexión a la base de datos: ('.
-                $this->base_datos->connect_errno.') '.$this->base_datos->connect_error.'.</p>';
+                self::$base_datos->connect_errno.') '.self::$base_datos->connect_error.'.</p>';
         }
     }
 
-    public function ejecuta_sql($sql)
+    public static function ejecuta_sql($sql)
     {
-        $resultado_consulta = $this->base_datos->query($sql);
+        $resultado_consulta = self::$base_datos->query($sql);
 
         if (!$resultado_consulta) {
             return false;
         } else {
             return $resultado_consulta;
         }
+    }
+
+    public static function get_instance()
+    {
+        if (self::$base_datos == null) {
+            self::$base_datos = new bd_gest();
+        }
+
+        return self::$base_datos;
+    }
+
+    public function cierra_conexion() {
+        self::$base_datos->close();
     }
 }

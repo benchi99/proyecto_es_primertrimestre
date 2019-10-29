@@ -10,12 +10,9 @@ class Usuario
     public $telefono;
     public $email;
     public $direccion;
-    public $poblacion;
-    public $codigo_postal;
-    public $provincia;
     public $rol;
 
-    public function __construct($id, $nombre_usuario, $nombre, $apellidos, $telefono, $email, $direccion, $poblacion, $codigo_postal, $provincia, $rol)
+    public function __construct($id, $nombre_usuario, $nombre, $apellidos, $telefono, $email, $direccion, $rol)
     {
         $this->id = $id;
         $this->nombre_usuario = $nombre_usuario;
@@ -24,21 +21,27 @@ class Usuario
         $this->telefono = $telefono;
         $this->email = $email;
         $this->direccion = $direccion;
-        $this->poblacion = $poblacion;
-        $this->codigo_postal = $codigo_postal;
-        $this->provincia = $provincia;
         $this->rol = $rol;
     }
 
     public function __construct1($id) {
         $this->id = $id;
-        $bd = new bd_gest();
+        $bd = bd_gest::get_instance();
 
-        $datos_usuario = $bd->ejecuta_sql("SELECT * FROM pryt1_usuarios WHERE usr_id = '.$id.'");
+        $consulta = $bd->ejecuta_sql("SELECT * FROM pryt1_usuarios WHERE usr_id = '.$id.'");
 
-        foreach ($datos_usuario->fetch_assoc() as $fila) {
-            $this->nombre_usuario = $fila['usr_nombreusu'];
-            $this->nombre = $fila['usr_nombre'];
+        if (!$consulta) {
+            echo "Error lol";
+        } else {
+            $datos_usuario = $consulta->fetch_assoc()[0];
+
+            $this->nombre_usuario = $datos_usuario['usr_nombreusu'];
+            $this->nombre = $datos_usuario['usr_nombre'];
+            $this->apellidos = $datos_usuario['usr_apellidos'];
+            $this->telefono = $datos_usuario['usr_tlf'];
+            $this->email = $datos_usuario['usr_email'];
+            $this->direccion = $datos_usuario['usr_direccion'];
+            $this->rol = $datos_usuario['usr_rol'];
         }
     }
 
