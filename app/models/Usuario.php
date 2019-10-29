@@ -1,5 +1,6 @@
 <?php
 require '../controllers/bd_gest.php';
+require '../config.php';
 
 class Usuario
 {
@@ -28,7 +29,7 @@ class Usuario
         $this->id = $id;
         $bd = bd_gest::get_instance();
 
-        $consulta = $bd->ejecuta_sql("SELECT * FROM pryt1_usuarios WHERE usr_id = '.$id.'");
+        $consulta = $bd->ejecuta_sql("SELECT * FROM ".TABLA_USUARIOS." WHERE usr_id = '.$id.'");
 
         if (!$consulta) {
             echo "Error lol";

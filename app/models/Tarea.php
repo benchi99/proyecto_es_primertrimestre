@@ -1,5 +1,6 @@
 <?php
-
+require '../config.php';
+require '../controllers/bd_gest.php';
 
 class Tarea
 {
@@ -37,7 +38,7 @@ class Tarea
 
         $bd = bd_gest::get_instance();
 
-        $consulta = $bd->ejecuta_sql("SELECT * FROM pryt1_tarea WHERE tsk_id = '".$id."'");
+        $consulta = $bd->ejecuta_sql("SELECT * FROM ".TABLA_TAREAS." WHERE tsk_id = '".$id."'");
         if (!$consulta) {
             echo "Error lol";
         } else {
