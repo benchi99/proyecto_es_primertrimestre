@@ -46,7 +46,21 @@ class Usuario
         }
     }
 
-    public function getFullName() {
+    public function get_full_name() {
         return $this->nombre.' '.$this->apellidos;
+    }
+
+    public function get_user_tasks() {
+        $bd = bd_gest::get_instance();
+        $result = [];
+
+        $ids = $bd->ejecuta_sql("SELECT tsk_id FROM ".TABLA_TAREAS." 
+                                      WHERE tsk_persona_encargada = ".$this->id);
+
+        while ($fila = $ids->fetch_assoc()) {
+            $result[] += new Tarea($ids['tsk_id']);
+        }
+
+        return $result;
     }
 }
