@@ -1,8 +1,7 @@
 <?php
-require '../config.php';
-require '../controllers/bd_gest.php';
+require __DIR__.'/../controllers/bd_gest.php';
 
-class Tarea
+class Tarea implements iDBTemplate
 {
     public $id;
     public $descripcion;
@@ -56,5 +55,15 @@ class Tarea
             $this->anotacion_anterior = $datos_usuario['tsk_anotacion_anterior'];
             $this->anotacion_posterior = $datos_usuario['tsk_anotacion_posterior'];
         }
+    }
+
+    public function es_valido()
+    {
+        // TODO: Implement es_valido() method.
+    }
+
+    public function commit_to_database()
+    {
+        // TODO: Implement commit_to_database() method.
     }
 }

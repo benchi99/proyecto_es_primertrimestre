@@ -1,6 +1,4 @@
 <?php
-require '../config.php';
-
 
 class bd_gest {
     // TODO: Echar un vistazo a PDO.
@@ -17,6 +15,12 @@ class bd_gest {
         }
     }
 
+    /**
+     *  Ejecuta una consulta en la base de datos.
+     *
+     * @param $sql string Consulta SQL
+     * @return bool|mysqli_result Resultado de la consulta, o falso si ha devuelto error.
+     */
     public static function ejecuta_sql($sql)
     {
         $resultado_consulta = self::$base_datos->query($sql);
@@ -28,6 +32,10 @@ class bd_gest {
         }
     }
 
+    /**
+     *  Obtiene la instancia de base de datos.
+     * @return bd_gest|mysqli
+     */
     public static function get_instance()
     {
         if (self::$base_datos == null) {
@@ -37,6 +45,9 @@ class bd_gest {
         return self::$base_datos;
     }
 
+    /**
+     * Cierra la conexión actual.
+     */
     public function cierra_conexion() {
         self::$base_datos->close();
     }

@@ -3,7 +3,10 @@
 // DATOS DE BASE DE DATOS
 
 # Datos acceso
-const USUARIO = "root", CONTRA = "", ESQUEMA = "proyecto_1trimestre";
+define("USUARIO", "root");
+define("CONTRA", "");
+define("ESQUEMA", "proyecto_1trimestre");
 
 # Nombre de Tablas
-const TABLA_USUARIOS = "pryt1_usuarios", TABLA_TAREAS = "pryt1_tarea";
+define("TABLA_USUARIOS", "pryt1_usuarios");
+define("TABLA_TAREAS", "pryt1_tarea");

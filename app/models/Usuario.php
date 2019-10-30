@@ -1,8 +1,7 @@
 <?php
-require '../controllers/bd_gest.php';
-require '../config.php';
+require __DIR__.'/../controllers/bd_gest.php';
 
-class Usuario
+class Usuario implements iDBTemplate
 {
     public $id;
     public $nombre_usuario;
@@ -62,5 +61,13 @@ class Usuario
         }
 
         return $result;
+    }
+
+    public function commit_to_database() {
+        // TODO: Insertar a base de datos.
+    }
+
+    public function es_valido() {
+        // TODO: Validar si datos son válidos.
     }
 }
