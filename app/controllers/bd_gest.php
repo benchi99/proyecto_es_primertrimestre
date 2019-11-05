@@ -1,54 +1,57 @@
 <?php
+/**
+ * Class bd_gest
+ * PATRÓN SINGLETON - Solo quiero una instancia de conexión a BD.
+ */
 
-class bd_gest {
-    // TODO: Echar un vistazo a PDO.
-
-    private static $base_datos;
-
-    private function __construct()
-    {
-        self::$base_datos = new mysqli("localhost", USUARIO, CONTRA, ESQUEMA);
-
-        if (!self::$base_datos->connect_errno) {
-            echo '<p style="color: red"> Falló la conexión a la base de datos: ('.
-                self::$base_datos->connect_errno.') '.self::$base_datos->connect_error.'.</p>';
-        }
-    }
+class bd_gest
+{
+    private $_connection;
+    private static $_instance; // La instancia única.
+    private $_host = "localhost";
+    private $_username = USUARIO;
+    private $_password = CONTRA;
+    private $_database = ESQUEMA;
 
     /**
-     *  Ejecuta una consulta en la base de datos.
-     *
-     * @param $sql string Consulta SQL
-     * @return bool|mysqli_result Resultado de la consulta, o falso si ha devuelto error.
-     */
-    public static function ejecuta_sql($sql)
-    {
-        $resultado_consulta = self::$base_datos->query($sql);
-
-        if (!$resultado_consulta) {
-            return false;
-        } else {
-            return $resultado_consulta;
-        }
-    }
-
-    /**
-     *  Obtiene la instancia de base de datos.
-     * @return bd_gest|mysqli
+     * Devuelve una instancia de base de datos.
+     *n
+     * @return bd_gest
      */
     public static function get_instance()
     {
-        if (self::$base_datos == null) {
-            self::$base_datos = new bd_gest();
+        if (!self::$_instance) { // If no instance then make one
+            self::$_instance = new self();
         }
+        return self::$_instance;
+    }
 
-        return self::$base_datos;
+    // Constructor
+    private function __construct()
+    {
+        $this->_connection = new mysqli($this->_host, $this->_username,
+            $this->_password, $this->_database);
+
+        // Si falla la conexión
+        if ($this->_connection->connect_error) {
+            echo '<p style="color: red">Hubo un error al conectar a base de datos: '.$this->_connection->connect_error.'
+                ('.$this->_connection->connect_errno.')</p>';
+        }
+    }
+
+    // Este método está vacío para evitar duplicar este objeto.
+    private function __clone()
+    {
     }
 
     /**
-     * Cierra la conexión actual.
+     * Devuelve la conexión de base de datos.
+     * @return mysqli
      */
-    public function cierra_conexion() {
-        self::$base_datos->close();
+    public function get_connection()
+    {
+        return $this->_connection;
     }
 }
+
+?>
