@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport"
+ content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+ <meta http-equiv="X-UA-Compatible" content="ie=edge">
+ <title>Tareas</title>
+</head>
+
+<body>
+ <h1>Tareas disponibles</h1>
+
+ <table>
+ <thead>
+ <tr>
+ <td>Acciones: </td>
+ <td colspan="11" style="text-align: right">
+ <a href='<?php  echo $this->relative("views/f_tarea.php?action=1");?>'>Añadir nueva tarea...</a>
+ </td>
+ </tr>
+ <tr>
+ <td>ID</td>
+ <td>Descripcion</td>
+ <td>Población</td>
+ <td>Código Postal</td>
+ <td>Provincia</td>
+ <td>Persona de contacto</td>
+ <td>Estado</td>
+ <td>Fecha de creación</td>
+ <td>Persona encargada</td>
+ <td>Fecha de realización</td>
+ <td>Anotación anterior</td>
+ <td>Anotación posterior</td>
+ </tr>
+ </thead>
+ <tbody>
+ <?php $__currentLoopData = $tareas; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $tarea): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <tr>
+ <td><?php echo static::e($tarea->id); ?></td>
+ <td><?php echo static::e($tarea->descripcion); ?></td>
+ <td><?php echo static::e($tarea->poblacion); ?></td>
+ <td><?php echo static::e($tarea->codigo_postal); ?></td>
+ <td><?php echo static::e($tarea->provincia); ?></td>
+ <td><?php echo static::e($tarea->persona_contacto); ?></td>
+ <td><?php echo static::e($tarea->estado); ?></td>
+ <td><?php echo static::e($tarea->fecha_creacion); ?></td>
+ <td><?php echo static::e($tarea->persona_encargada); ?></td>
+ <td><?php echo static::e($tarea->fecha_realizacion); ?></td>
+ <td><?php echo static::e($tarea->anotacion_anterior); ?></td>
+ <td><?php echo static::e($tarea->anotacion_posterior); ?></td>
+ </tr>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </tbody>
+ <tfoot>
+ <tr>
+ <td>ID</td>
+ <td>Descripcion</td>
+ <td>Población</td>
+ <td>Código Postal</td>
+ <td>Provincia</td>
+ <td>Persona de contacto</td>
+ <td>Estado</td>
+ <td>Fecha de creación</td>
+ <td>Persona encargada</td>
+ <td>Fecha de realización</td>
+ <td>Anotación anterior</td>
+ <td>Anotación posterior</td>
+ </tr>
+ </tfoot>
+ </table>
+</body>
+</html>

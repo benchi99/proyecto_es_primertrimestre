@@ -1,7 +1,6 @@
 <?php
 
 // DATOS DE BASE DE DATOS
-
 # Datos acceso
 
 define("USUARIO", "root");
@@ -16,6 +15,11 @@ define("TABLA_TAREAS", "pryt1_tarea");
 include __DIR__.'\..\lib\BladeOne.php';
 use eftec\bladeone\BladeOne;
 
-$blade = new BladeOne(null, null, BladeOne::MODE_DEBUG);
+$blade = new BladeOne(__DIR__.'\views\templates',
+    __DIR__.'\views\templates\compiled',
+    BladeOne::MODE_DEBUG); // CAMBIAR A PROD AL ENTREGAR!!!!!
 
-echo $blade->run("Test.hello", []);
+// TODO: Cambiar a URL del servidor a desplegar.
+$blade->setBaseUrl("http://localhost/ES/proyecto_es_primertrimestre/app/");
+// Escribir esto a la hora de invocar una vista.
+// echo $blade->run("Test.hello", []);
