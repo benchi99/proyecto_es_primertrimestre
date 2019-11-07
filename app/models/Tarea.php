@@ -1,8 +1,7 @@
 <?php
-require '../config.php';
-require '../controllers/bd_gest.php';
+require 'iDBTemplate.php';
 
-class Tarea
+class Tarea implements iDBTemplate
 {
     public $id;
     public $descripcion;
@@ -17,44 +16,80 @@ class Tarea
     public $anotacion_anterior;
     public $anotacion_posterior;
 
-    public function __construct($id, $descripcion, $poblacion, $codigo_postal, $provincia, $persona_contacto, $estado, $fecha_creacion, $persona_encargada, $fecha_realizacion, $anotacion_anterior, $anotacion_posterior)
+    public function __construct($data)
     {
-        $this->id = $id;
-        $this->descripcion = $descripcion;
-        $this->poblacion = $poblacion;
-        $this->codigo_postal = $codigo_postal;
-        $this->provincia = $provincia;
-        $this->persona_contacto = $persona_contacto;
-        $this->estado = $estado;
-        $this->fecha_creacion = $fecha_creacion;
-        $this->persona_encargada = $persona_encargada;
-        $this->fecha_realizacion = $fecha_realizacion;
-        $this->anotacion_anterior = $anotacion_anterior;
-        $this->anotacion_posterior = $anotacion_posterior;
+        if (!$this->__vienen_todos_los_datos($data) && isset($data['id'])) {
+            $this->__construye_desde_id($data['id']);
+        } else if ($this->__vienen_todos_los_datos($data)) {
+            $this->__construye_todos_params($data);
+        } else {
+            throw new Exception('Objeto "Tarea" no se ha podido construir');
+        }
     }
 
-    public function __construct1($id) {
+    private function __construye_todos_params($data) {
+        $this->id = $data['id'];
+        $this->descripcion = $data['descripcion'];
+        $this->poblacion = $data['poblacion'];
+        $this->codigo_postal = $data['codigo_postal'];
+        $this->provincia = $data['provincia'];
+        $this->persona_contacto = $data['persona_contacto'];
+        $this->estado = $data['estado'];
+        $this->fecha_creacion = $data['fecha_creacion'];
+        $this->persona_encargada = $data['persona_encargada'];
+        $this->fecha_realizacion = $data['fecha_realizacion'];
+        $this->anotacion_anterior = $data['anotacion_anterior'];
+        $this->anotacion_posterior = $data['anotacion_posterior'];
+    }
+
+    private function __construye_desde_id($id) {
         $this->id = $id;
 
         $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
 
-        $consulta = $bd->ejecuta_sql("SELECT * FROM ".TABLA_TAREAS." WHERE tsk_id = '".$id."'");
+        $consulta = $conexion->query("SELECT * FROM ".TABLA_TAREAS." WHERE tsk_id = '".$id."'");
         if (!$consulta) {
             echo "Error lol";
         } else {
-            $datos_usuario = $consulta->fetch_assoc()[0];
-
-            $this->descripcion = $datos_usuario['tsk_descripcion'];
-            $this->poblacion = $datos_usuario['tsk_poblacion'];
-            $this->codigo_postal = $datos_usuario['tsk_cp'];
-            $this->provincia = $datos_usuario['tsk_provincia'];
-            $this->persona_contacto = $datos_usuario['tsk_persona_contacto'];
-            $this->estado = $datos_usuario['tsk_estado'];
-            $this->fecha_creacion = $datos_usuario['tsk_fecha_creacion'];
-            $this->persona_encargada = $datos_usuario['tsk_persona_encargada'];
-            $this->fecha_realizacion = $datos_usuario['tsk_fecha_realizacion'];
-            $this->anotacion_anterior = $datos_usuario['tsk_anotacion_anterior'];
-            $this->anotacion_posterior = $datos_usuario['tsk_anotacion_posterior'];
+            while ($fila = $consulta->fetch_assoc()) {
+                $this->descripcion = $fila['tsk_descripcion'];
+                $this->poblacion = $fila['tsk_poblacion'];
+                $this->codigo_postal = $fila['tsk_cp'];
+                $this->provincia = $fila['tsk_provincia'];
+                $this->persona_contacto = $fila['tsk_persona_contacto'];
+                $this->estado = $fila['tsk_estado'];
+                $this->fecha_creacion = $fila['tsk_fecha_creacion'];
+                $this->persona_encargada = $fila['tsk_persona_encargada'];
+                $this->fecha_realizacion = $fila['tsk_fecha_realizacion'];
+                $this->anotacion_anterior = $fila['tsk_anotacion_anterior'];
+                $this->anotacion_posterior = $fila['tsk_anotacion_posterior'];
+            }
         }
+    }
+
+    private function __vienen_todos_los_datos($data) {
+        return isset($data['id']) &&
+            isset($data['descripcion']) &&
+            isset($data['poblacion']) &&
+            isset($data['codigo_postal']) &&
+            isset($data['provincia']) &&
+            isset($data['persona_contacto']) &&
+            isset($data['estado']) &&
+            isset($data['fecha_creacion']) &&
+            isset($data['persona_encargada']) &&
+            isset($data['fecha_realizacion']) &&
+            isset($data['anotacion_anterior']) &&
+            isset($data['anotacion_posterior']);
+    }
+
+    public function es_valido()
+    {
+        // TODO: Implement es_valido() method.
+    }
+
+    public function commit_to_database()
+    {
+        // TODO: Implement commit_to_database() method.
     }
 }
