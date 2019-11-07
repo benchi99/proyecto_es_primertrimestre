@@ -20,6 +20,6 @@ $blade = new BladeOne(__DIR__.'\views\templates',
     BladeOne::MODE_DEBUG); // CAMBIAR A PROD AL ENTREGAR!!!!!
 
 // TODO: Cambiar a URL del servidor a desplegar.
-$blade->setBaseUrl("http://localhost/ES/proyecto_es_primertrimestre/app/");
+$blade->setBaseUrl("http://localhost/ES/proyecto_es_primertrimestre/");
 // Escribir esto a la hora de invocar una vista.
 // echo $blade->run("Test.hello", []);
