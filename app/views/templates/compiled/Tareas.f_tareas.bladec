@@ -40,7 +40,13 @@
  <td>
  <select name="persona_contacto" id="persona_contacto">
  <option value=""> == SELECCIONA UNO == </option>
- <!-- TODO: obtener todos los usuarios -->
+ <?php $__currentLoopData = $usuarios; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $usuario): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <?php if($action === 2 and $usuario->id === $tarea->persona_contacto): ?>
+ <option value="<?php echo static::e($usuario->id); ?>" selected><?php echo static::e($usuario->nombre); ?></option>
+ <?php else: ?>
+ <option value="<?php echo static::e($usuario->id); ?>"><?php echo static::e($usuario->nombre); ?></option>
+ <?php endif; ?>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  </select>
  </td>
  </tr>
@@ -57,7 +63,13 @@
  <td>
  <select name="persona_encargada" id="persona_encargada">
  <option value=""> == SELECCIONA UNO ==</option>
- <!-- TODO: obtener todos los usuarios -->
+ <?php $__currentLoopData = $usuarios; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $usuario): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <?php if($action === 2 and $usuario->id === $tarea->persona_encargada): ?>
+ <option value="<?php echo static::e($usuario->id); ?>" selected><?php echo static::e($usuario->nombre); ?></option>
+ <?php else: ?>
+ <option value="<?php echo static::e($usuario->id); ?>"><?php echo static::e($usuario->nombre); ?></option>
+ <?php endif; ?>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
  </select>
  </td>
  </tr>

@@ -1,5 +1,6 @@
 <?php
-require 'iDBTemplate.php';
+require_once __DIR__.'/iDBTemplate.php';
+require_once __DIR__.'/../controllers/bd_gest.php';
 
 class Usuario implements iDBTemplate
 {
@@ -42,7 +43,7 @@ class Usuario implements iDBTemplate
 
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
-        $consulta = $conexion->query("SELECT * FROM " . TABLA_USUARIOS . " WHERE usr_id = '.$id.'");
+        $consulta = $conexion->query("SELECT * FROM pryt1_usuarios WHERE usr_id = '.$id.'");
 
         if (!$consulta) {
             echo "Error lol";
@@ -71,11 +72,11 @@ class Usuario implements iDBTemplate
         $conexion = $bd->get_connection();
         $result = [];
 
-        $ids = $conexion->query("SELECT tsk_id FROM " . TABLA_TAREAS . " 
+        $ids = $conexion->query("SELECT tsk_id FROM pryt1_tarea 
                                       WHERE tsk_persona_encargada = " . $this->id);
 
         while ($fila = $ids->fetch_assoc()) {
-            $result[] += new Tarea($ids['tsk_id']);
+            array_push($result, new Tarea($ids['tsk_id']));
         }
 
         return $result;
@@ -103,4 +104,8 @@ class Usuario implements iDBTemplate
             isset($data['rol']);
     }
 
+    public function delete()
+    {
+        // TODO: Implement delete() method.
+    }
 }

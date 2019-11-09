@@ -1,16 +1,20 @@
 <?php
-require '../models/Tarea.php';
-require '../config.php';
+require_once __DIR__.'/../models/Tarea.php';
+require_once __DIR__.'/../models/Usuario.php';
+require_once __DIR__.'/../config.php';
+require_once __DIR__.'/../controllers/consultas_comunes.php';
 
 if (!$_GET) {
     // Hacer algo
 } else {
     if (isset($_GET['action'])) {
+        $usuarios = obtain_all_users();
+
         switch ($_GET['action']) {
             case 1:
                 // Simplemente redirigir a formulario vacio
                 try {
-                    echo $blade->run('Tareas.f_tareas', ["action" => 1]);
+                    echo $blade->run('Tareas.f_tareas', ["action" => 1, "usuarios" => $usuarios]);
                 } catch (Exception $e) {
                     echo $e->getMessage();
                 }
@@ -22,7 +26,9 @@ if (!$_GET) {
                     // Enviar objeto tarea a formulario
                     try {
                         $tarea = new Tarea(["id" => $_GET['task_id']]);
-                        echo $blade->run('Tareas.f_tareas', ["action" => 2, "tarea" => $tarea]);
+                        echo $blade->run('Tareas.f_tareas', ["action" => 2,
+                                                                    "tarea" => $tarea,
+                                                                    "usuarios" => $usuarios]);
                     } catch (Exception $e) {
                         echo $e->getMessage();
                     }

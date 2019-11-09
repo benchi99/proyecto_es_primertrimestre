@@ -1,5 +1,6 @@
 <?php
-require 'iDBTemplate.php';
+require_once __DIR__.'/iDBTemplate.php';
+require_once __DIR__.'/../controllers/bd_gest.php';
 
 class Tarea implements iDBTemplate
 {
@@ -48,7 +49,7 @@ class Tarea implements iDBTemplate
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
 
-        $consulta = $conexion->query("SELECT * FROM ".TABLA_TAREAS." WHERE tsk_id = '".$id."'");
+        $consulta = $conexion->query("SELECT * FROM pryt1_tarea WHERE tsk_id = '".$id."'");
         if (!$consulta) {
             echo "Error lol";
         } else {
@@ -91,5 +92,10 @@ class Tarea implements iDBTemplate
     public function commit_to_database()
     {
         // TODO: Implement commit_to_database() method.
+    }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
     }
 }

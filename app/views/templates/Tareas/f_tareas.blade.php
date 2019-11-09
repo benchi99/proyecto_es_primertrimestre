@@ -39,7 +39,13 @@
             <td>
                 <select name="persona_contacto" id="persona_contacto">
                     <option value=""> == SELECCIONA UNO == </option>
-                    <!-- TODO: obtener todos los usuarios -->
+                    @foreach($usuarios as $usuario)
+                        @if($action === 2 and $usuario->id === $tarea->persona_contacto)
+                            <option value="{{ $usuario->id }}" selected>{{ $usuario->nombre }}</option>
+                        @else
+                            <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
+                        @endif
+                    @endforeach
                 </select>
             </td>
         </tr>
@@ -56,7 +62,13 @@
             <td>
                 <select name="persona_encargada" id="persona_encargada">
                     <option value=""> == SELECCIONA UNO ==</option>
-                    <!-- TODO: obtener todos los usuarios -->
+                    @foreach($usuarios as $usuario)
+                        @if($action === 2 and $usuario->id === $tarea->persona_encargada)
+                            <option value="{{ $usuario->id }}" selected>{{ $usuario->nombre }}</option>
+                        @else
+                            <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
+                        @endif
+                    @endforeach
                 </select>
             </td>
         </tr>
