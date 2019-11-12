@@ -16,7 +16,7 @@
             <tr>
                 <td>Acciones: </td>
                 <td colspan="11" style="text-align: right">
-                    <a href='@relative("app/views/f_tarea.php?action=1")'>Añadir nueva tarea...</a>
+                    <a href='@relative("app/controllers/f_tarea.php?action=1")'>Añadir nueva tarea...</a>
                 </td>
             </tr>
             <tr>
@@ -43,17 +43,29 @@
                     <td>{{ $tarea->poblacion }}</td>
 {{--                    <td>{{ $tarea->codigo_postal }}</td>--}}
 {{--                    <td>{{ $tarea->provincia }}</td>--}}
-                    <td>{{ $tarea->persona_contacto }}</td>
+                    <td>
+                        @foreach($usuarios as $usuario)
+                             @if($usuario->id === $tarea->persona_contacto)
+                                {{ $usuario->nombre }}
+                             @endif
+                        @endforeach
+                    </td>
                     <td>{{ $tarea->estado }}</td>
                     <td>{{ $tarea->fecha_creacion }}</td>
-                    <td>{{ $tarea->persona_encargada }}</td>
+                    <td>
+                        @foreach($usuarios as $usuario)
+                            @if($usuario->id === $tarea->persona_encargada)
+                                {{ $usuario->nombre }}
+                            @endif
+                        @endforeach
+                    </td>
                     <td>{{ $tarea->fecha_realizacion }}</td>
                     <td>{{ $tarea->anotacion_anterior }}</td>
                     <td>{{ $tarea->anotacion_posterior }}</td>
                     <td>
-                        <a href='@relative("app/views/f_tarea.php?action=2&task_id={$tarea->id}")'><img
+                        <a href='@relative("app/controllers/f_tarea.php?action=2&task_id={$tarea->id}")'><img
                                     src='@relative("assets/img/icons/edit.svg")' alt="Editar"> Editar</a>
-                        <a href='@relative("app/views/f_tarea.php?action=3&task_id={$tarea->id}")'><img
+                        <a href='@relative("app/controllers/f_tarea.php?action=3&task_id={$tarea->id}")'><img
                                     src='@relative("assets/img/icons/eliminar.png")' alt="Eliminar"> Eliminar</a>
                     </td>
                 </tr>

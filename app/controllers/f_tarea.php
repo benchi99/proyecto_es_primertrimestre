@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__.'/../models/Tarea.php';
-require_once __DIR__.'/../models/Usuario.php';
-require_once __DIR__.'/../config.php';
-require_once __DIR__.'/../controllers/consultas_comunes.php';
+require_once __DIR__ . '/../models/Tarea.php';
+require_once __DIR__ . '/../models/Usuario.php';
+require_once __DIR__ . '/../config.php';
+require_once __DIR__ . '/consultas_comunes.php';
 
 if (!$_GET) {
     // Hacer algo
@@ -12,11 +12,16 @@ if (!$_GET) {
 
         switch ($_GET['action']) {
             case 1:
-                // Simplemente redirigir a formulario vacio
-                try {
-                    echo $blade->run('Tareas.f_tareas', ["action" => 1, "usuarios" => $usuarios]);
-                } catch (Exception $e) {
-                    echo $e->getMessage();
+                if (!$_POST) {
+                    // Simplemente redirigir a formulario vacio
+                    try {
+                        echo $blade->run('Tareas.f_tareas', ["action" => 1, "usuarios" => $usuarios]);
+                    } catch (Exception $e) {
+                        echo $e->getMessage();
+                    }
+                } else {
+                    // Hay datos de formulario, el usuario está intentando insertar a BD
+
                 }
                 break;
             case 2:
@@ -41,5 +46,13 @@ if (!$_GET) {
                     // TODO: hacer justo lo que pone en el comentario encima mío
                 }
         }
+    }
+}
+
+function valida_datos() {
+    $estado = true;
+
+    if (isset($_POST['descripcion'])) {
+
     }
 }

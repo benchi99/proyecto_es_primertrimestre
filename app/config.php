@@ -11,8 +11,8 @@ define("ESQUEMA", "proyecto_1trimestre");
 include __DIR__.'\..\lib\BladeOne.php';
 use eftec\bladeone\BladeOne;
 
-$blade = new BladeOne(__DIR__.'\views\templates',
-    __DIR__.'\views\templates\compiled',
+$blade = new BladeOne(__DIR__.'\views',
+    __DIR__.'\views\compiled',
     BladeOne::MODE_DEBUG); // CAMBIAR A PROD AL ENTREGAR!!!!!
 
 // TODO: Cambiar a URL del servidor a desplegar.

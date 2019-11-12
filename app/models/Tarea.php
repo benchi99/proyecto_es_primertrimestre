@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/iDBTemplate.php';
-require_once __DIR__.'/../controllers/bd_gest.php';
+require_once __DIR__ . '/bd_gest.php';
 
 class Tarea implements iDBTemplate
 {

@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__.'/iDBTemplate.php';
-require_once __DIR__.'/../controllers/bd_gest.php';
+require_once __DIR__ . '/bd_gest.php';
 
 class Usuario implements iDBTemplate
 {
@@ -43,7 +43,7 @@ class Usuario implements iDBTemplate
 
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
-        $consulta = $conexion->query("SELECT * FROM pryt1_usuarios WHERE usr_id = '.$id.'");
+        $consulta = $conexion->query('SELECT * FROM pryt1_usuarios WHERE usr_id = "'.$id.'"');
 
         if (!$consulta) {
             echo "Error lol";
@@ -58,7 +58,6 @@ class Usuario implements iDBTemplate
                 $this->rol = $fila['usr_rol'];
             }
         }
-
     }
 
     public function get_full_name()
