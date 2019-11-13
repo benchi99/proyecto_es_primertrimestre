@@ -1,14 +1,5 @@
-<!doctype html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Garden</title>
-</head>
+@include('General.cabecera')
 
-<body>
     <h1>Tareas disponibles</h1>
 
     <table>
@@ -16,7 +7,7 @@
             <tr>
                 <td>Acciones: </td>
                 <td colspan="11" style="text-align: right">
-                    <a href='@relative("app/controllers/f_tarea.php?action=1")'>Añadir nueva tarea...</a>
+                    <a href='@relative("app/controllers/f_tarea.php?action=1")'><i class="fas fa-plus"></i> Añadir nueva tarea...</a>
                 </td>
             </tr>
             <tr>
@@ -63,10 +54,10 @@
                     <td>{{ $tarea->anotacion_anterior }}</td>
                     <td>{{ $tarea->anotacion_posterior }}</td>
                     <td>
-                        <a href='@relative("app/controllers/f_tarea.php?action=2&task_id={$tarea->id}")'><img
-                                    src='@relative("assets/img/icons/edit.svg")' alt="Editar"> Editar</a>
-                        <a href='@relative("app/controllers/f_tarea.php?action=3&task_id={$tarea->id}")'><img
-                                    src='@relative("assets/img/icons/eliminar.png")' alt="Eliminar"> Eliminar</a>
+                        <a href='@relative("app/controllers/f_tarea.php?action=2&task_id={$tarea->id}")'>
+                            <i class="fas fa-edit"></i> Editar</a>
+                        <a href='@relative("app/controllers/f_tarea.php?action=3&task_id={$tarea->id}")'>
+                            <i class="fas fa-eraser"></i> Eliminar</a>
                     </td>
                 </tr>
             @endforeach
@@ -89,5 +80,5 @@
             </tr>
         </tfoot>
     </table>
-</body>
-</html>
+
+@include('General.pie')

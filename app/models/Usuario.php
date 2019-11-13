@@ -27,7 +27,9 @@ class Usuario implements iDBTemplate
     
     private function __construye_todos_params($data)
     {
-        $this->id = $data['id'];
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
         $this->nombre_usuario = $data['nombre_usuario'];
         $this->nombre = $data['nombre'];
         $this->apellidos = $data['apellidos'];
@@ -81,26 +83,20 @@ class Usuario implements iDBTemplate
         return $result;
     }
 
-    public function commit_to_database()
-    {
-        // TODO: Insertar a base de datos.
-    }
-
-    public function es_valido()
-    {
-        // TODO: Validar si datos son válidos.
-    }
-
     private function __vienen_todos_los_datos($data)
     {
-        return isset($data['id']) &&
-            isset($data['nombre_usuario']) &&
+        return isset($data['nombre_usuario']) &&
             isset($data['nombre']) &&
             isset($data['apellidos']) &&
             isset($data['telefono']) &&
             isset($data['email']) &&
             isset($data['direccion']) &&
             isset($data['rol']);
+    }
+
+    public function commit_to_database()
+    {
+        // TODO: Implement commit_to_database() method.
     }
 
     public function delete()

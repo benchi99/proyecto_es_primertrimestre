@@ -2,7 +2,6 @@
 
 // DATOS DE BASE DE DATOS
 # Datos acceso
-
 define("USUARIO", "root");
 define("CONTRA", "");
 define("ESQUEMA", "proyecto_1trimestre");
