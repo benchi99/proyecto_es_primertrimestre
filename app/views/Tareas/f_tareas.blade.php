@@ -7,9 +7,7 @@
         <tr>
             <td><label for="descripcion">Descripción</label></td>
             <td>
-                <textarea name="descripcion" id="descripcion" cols="30" rows="10">
-                    {{ $tarea->descripcion or '' }}
-                </textarea>
+                <textarea name="descripcion" id="descripcion" cols="30" rows="10">{{ $tarea->descripcion or '' }}</textarea>
             </td>
             @if($errores['descripcion'])
                 <td>

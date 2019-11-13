@@ -7,10 +7,7 @@
  <tr>
  <td><label for="descripcion">Descripción</label></td>
  <td>
- <textarea name="descripcion" id="descripcion" cols="30" rows="10">
- <?php echo static::e(isset($tarea->descripcion) ? $tarea->descripcion : ''); ?>
-
- </textarea>
+ <textarea name="descripcion" id="descripcion" cols="30" rows="10"><?php echo static::e(isset($tarea->descripcion) ? $tarea->descripcion : ''); ?></textarea>
  </td>
  <?php if($errores['descripcion']): ?>
  <td>
