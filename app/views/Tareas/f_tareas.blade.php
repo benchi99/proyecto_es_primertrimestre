@@ -7,7 +7,11 @@
         <tr>
             <td><label for="descripcion">Descripción</label></td>
             <td>
+            @if($action===1)
+                <textarea name="descripcion" id="descripcion" cols="30" rows="10">{{ $valores_antiguos['descripcion'] or '' }}</textarea>
+            @elseif($action===2)
                 <textarea name="descripcion" id="descripcion" cols="30" rows="10">{{ $tarea->descripcion or '' }}</textarea>
+            @endif
             </td>
             @if($errores['descripcion'])
                 <td>
@@ -19,7 +23,11 @@
         </tr>
         <tr>
             <td><label for="poblacion">Población</label></td>
-            <td><input type="text" name="poblacion" id="poblacion" value="{{ $tarea->poblacion or '' }}"></td>
+            @if($action===1)
+                <td><input type="text" name="poblacion" id="poblacion" value="{{ $valores_antiguos['poblacion'] or '' }}"></td>
+            @elseif($action===2)
+                <td><input type="text" name="poblacion" id="poblacion" value="{{ $tarea->poblacion or '' }}"></td>
+            @endif
             @if($errores['poblacion'])
                 <td>
                     <div class="alert alert-danger" role="alert">
@@ -30,8 +38,12 @@
         </tr>
         <tr>
             <td><label for="cp">Código Postal</label></td>
-            <td><input type="text" name="cp" id="cp" value="{{ $tarea->codigo_postal or ''}}"></td>
-            @if($errores['cp'])
+            @if($action===1)
+                <td><input type="text" name="cp" id="cp" value="{{ $valores_antiguos['cp'] or '' }}"></td>
+            @elseif($action===2)
+                <td><input type="text" name="cp" id="cp" value="{{ $tarea->codigo_postal or '' }}"></td>
+            @endif
+        @if($errores['cp'])
                 <td>
                     <div class="alert alert-danger" role="alert">
                         {{ $errores['cp'] }}
@@ -42,7 +54,7 @@
         <tr>
             <td><label for="provincia">Provincia</label></td>
             <td>
-                <select id="provincia">
+                <select name="provincia" id="provincia">
                     <option value='alava'>Álava</option>
                     <option value='albacete'>Albacete</option>
                     <option value='alicante'>Alicante/Alacant</option>
@@ -111,7 +123,7 @@
                 <select name="persona_contacto" id="persona_contacto">
                     <option value=""> == SELECCIONA UNO == </option>
                     @foreach($usuarios as $usuario)
-                        @if($action === 2 and $usuario->id === $tarea->persona_contacto)
+                        @if(($action === 2 and $usuario->id === $tarea->persona_contacto) or (($valores_antiguos['persona_contacto'] and $action === 1) and $usuario->id === $valores_antiguos['persona_contacto']))
                             <option value="{{ $usuario->id }}" selected>{{ $usuario->nombre }}</option>
                         @else
                             <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
@@ -129,7 +141,11 @@
         </tr>
         <tr>
             <td><label for="estado">Estado</label></td>
-            <td><input type="text" name="estado" id="estado" value="{{ $tarea->estado or '' }}"></td>
+            @if($action===1)
+                <td><input type="text" name="estado" id="estado" value="{{ $valores_antiguos['estado'] or '' }}"></td>
+            @elseif($action===2)
+                <td><input type="text" name="estado" id="estado" value="{{ $tarea->estado or '' }}"></td>
+            @endif
         </tr>
         @if($action===2)
             <tr>
@@ -143,7 +159,7 @@
                 <select name="persona_encargada" id="persona_encargada">
                     <option value=""> == SELECCIONA UNO ==</option>
                     @foreach($usuarios as $usuario)
-                        @if($action === 2 and $usuario->id === $tarea->persona_encargada)
+                        @if(($action === 2 and $usuario->id === $tarea->persona_encargada) or ($valores_antiguos['persona_encargada'] and $usuario->id === $valores_antiguos['persona_encargada']))
                             <option value="{{ $usuario->id }}" selected>{{ $usuario->nombre }}</option>
                         @else
                             <option value="{{ $usuario->id }}">{{ $usuario->nombre }}</option>
@@ -154,7 +170,11 @@
         </tr>
         <tr>
             <td><label for="fecha_realizacion">Fecha de realización</label></td>
-            <td><input type="text" name="fecha_realizacion" id="fecha_realizacion" value="{{ $tarea->fecha_realizacion or ''}}"></td>
+            @if($action===1)
+                <td><input type="text" name="fecha_realizacion" id="fecha_realizacion" value="{{ $valores_antiguos['fecha_realizacion'] or ''}}"></td>
+            @elseif($action===2)
+                <td><input type="text" name="fecha_realizacion" id="fecha_realizacion" value="{{ $tarea->fecha_realizacion or ''}}"></td>
+            @endif
             @if($errores['fecha_realizacion'])
                 <td>
                     <div class="alert alert-danger" role="alert">
@@ -165,11 +185,19 @@
         </tr>
         <tr>
             <td><label for="anotacion_anterior">Anotación anterior</label></td>
-            <td><input type="text" name="anotacion_anterior" id="anotacion_anterior" value="{{ $tarea->anotacion_anterior or ''}}"></td>
+            @if($action===1)
+                <td><input type="text" name="anotacion_anterior" id="anotacion_anterior" value="{{ $valores_antiguos['anotacion_anterior'] or '' }}"></td>
+            @elseif($action===2)
+                <td><input type="text" name="anotacion_anterior" id="anotacion_anterior" value="{{ $tarea->anotacion_anterior or '' }}"></td>
+            @endif
         </tr>
         <tr>
             <td><label for="anotacion_posterior">Anotación posterior</label></td>
-            <td><input type="text" name="anotacion_posterior" id="anotacion_posterior" value=" {{ $tarea->anotacion_posterior or '' }}"></td>
+            @if($action===1)
+                <td><input type="text" name="anotacion_posterior" id="anotacion_posterior" value=" {{ $valores_antiguos['anotacion_posterior'] or '' }}"></td>
+            @elseif($action===2)
+                <td><input type="text" name="anotacion_posterior" id="anotacion_posterior" value=" {{ $tarea->anotacion_posterior or '' }}"></td>
+            @endif
         </tr>
         <tr>
             <td colspan="2"><input type="submit" value="Enviar"></td>

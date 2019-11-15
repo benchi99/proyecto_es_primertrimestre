@@ -7,7 +7,11 @@
  <tr>
  <td><label for="descripcion">Descripción</label></td>
  <td>
+ <?php if($action===1): ?>
+ <textarea name="descripcion" id="descripcion" cols="30" rows="10"><?php echo static::e(isset($valores_antiguos['descripcion']) ? $valores_antiguos['descripcion'] : ''); ?></textarea>
+ <?php elseif($action===2): ?>
  <textarea name="descripcion" id="descripcion" cols="30" rows="10"><?php echo static::e(isset($tarea->descripcion) ? $tarea->descripcion : ''); ?></textarea>
+ <?php endif; ?>
  </td>
  <?php if($errores['descripcion']): ?>
  <td>
@@ -20,7 +24,11 @@
  </tr>
  <tr>
  <td><label for="poblacion">Población</label></td>
+ <?php if($action===1): ?>
+ <td><input type="text" name="poblacion" id="poblacion" value="<?php echo static::e(isset($valores_antiguos['poblacion']) ? $valores_antiguos['poblacion'] : ''); ?>"></td>
+ <?php elseif($action===2): ?>
  <td><input type="text" name="poblacion" id="poblacion" value="<?php echo static::e(isset($tarea->poblacion) ? $tarea->poblacion : ''); ?>"></td>
+ <?php endif; ?>
  <?php if($errores['poblacion']): ?>
  <td>
  <div class="alert alert-danger" role="alert">
@@ -32,7 +40,11 @@
  </tr>
  <tr>
  <td><label for="cp">Código Postal</label></td>
+ <?php if($action===1): ?>
+ <td><input type="text" name="cp" id="cp" value="<?php echo static::e(isset($valores_antiguos['cp']) ? $valores_antiguos['cp'] : ''); ?>"></td>
+ <?php elseif($action===2): ?>
  <td><input type="text" name="cp" id="cp" value="<?php echo static::e(isset($tarea->codigo_postal) ? $tarea->codigo_postal : ''); ?>"></td>
+ <?php endif; ?>
  <?php if($errores['cp']): ?>
  <td>
  <div class="alert alert-danger" role="alert">
@@ -45,7 +57,7 @@
  <tr>
  <td><label for="provincia">Provincia</label></td>
  <td>
- <select id="provincia">
+ <select name="provincia" id="provincia">
  <option value='alava'>Álava</option>
  <option value='albacete'>Albacete</option>
  <option value='alicante'>Alicante/Alacant</option>
@@ -115,7 +127,7 @@
  <select name="persona_contacto" id="persona_contacto">
  <option value=""> == SELECCIONA UNO == </option>
  <?php $__currentLoopData = $usuarios; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $usuario): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
- <?php if($action === 2 and $usuario->id === $tarea->persona_contacto): ?>
+ <?php if(($action === 2 and $usuario->id === $tarea->persona_contacto) or ($valores_antiguos['persona_contacto'] and $usuario->id === $valores_antiguos['persona_contacto'])): ?>
  <option value="<?php echo static::e($usuario->id); ?>" selected><?php echo static::e($usuario->nombre); ?></option>
  <?php else: ?>
  <option value="<?php echo static::e($usuario->id); ?>"><?php echo static::e($usuario->nombre); ?></option>
@@ -134,7 +146,11 @@
  </tr>
  <tr>
  <td><label for="estado">Estado</label></td>
+ <?php if($action===1): ?>
+ <td><input type="text" name="estado" id="estado" value="<?php echo static::e(isset($valores_antiguos['estado']) ? $valores_antiguos['estado'] : ''); ?>"></td>
+ <?php elseif($action===2): ?>
  <td><input type="text" name="estado" id="estado" value="<?php echo static::e(isset($tarea->estado) ? $tarea->estado : ''); ?>"></td>
+ <?php endif; ?>
  </tr>
  <?php if($action===2): ?>
  <tr>
@@ -148,7 +164,7 @@
  <select name="persona_encargada" id="persona_encargada">
  <option value=""> == SELECCIONA UNO ==</option>
  <?php $__currentLoopData = $usuarios; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $usuario): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
- <?php if($action === 2 and $usuario->id === $tarea->persona_encargada): ?>
+ <?php if(($action === 2 and $usuario->id === $tarea->persona_encargada) or ($valores_antiguos['persona_encargada'] and $usuario->id === $valores_antiguos['persona_encargada'])): ?>
  <option value="<?php echo static::e($usuario->id); ?>" selected><?php echo static::e($usuario->nombre); ?></option>
  <?php else: ?>
  <option value="<?php echo static::e($usuario->id); ?>"><?php echo static::e($usuario->nombre); ?></option>
@@ -159,7 +175,11 @@
  </tr>
  <tr>
  <td><label for="fecha_realizacion">Fecha de realización</label></td>
+ <?php if($action===1): ?>
+ <td><input type="text" name="fecha_realizacion" id="fecha_realizacion" value="<?php echo static::e(isset($valores_antiguos['fecha_realizacion']) ? $valores_antiguos['fecha_realizacion'] : ''); ?>"></td>
+ <?php elseif($action===2): ?>
  <td><input type="text" name="fecha_realizacion" id="fecha_realizacion" value="<?php echo static::e(isset($tarea->fecha_realizacion) ? $tarea->fecha_realizacion : ''); ?>"></td>
+ <?php endif; ?>
  <?php if($errores['fecha_realizacion']): ?>
  <td>
  <div class="alert alert-danger" role="alert">
@@ -171,11 +191,19 @@
  </tr>
  <tr>
  <td><label for="anotacion_anterior">Anotación anterior</label></td>
+ <?php if($action===1): ?>
+ <td><input type="text" name="anotacion_anterior" id="anotacion_anterior" value="<?php echo static::e(isset($valores_antiguos['anotacion_anterior']) ? $valores_antiguos['anotacion_anterior'] : ''); ?>"></td>
+ <?php elseif($action===2): ?>
  <td><input type="text" name="anotacion_anterior" id="anotacion_anterior" value="<?php echo static::e(isset($tarea->anotacion_anterior) ? $tarea->anotacion_anterior : ''); ?>"></td>
+ <?php endif; ?>
  </tr>
  <tr>
  <td><label for="anotacion_posterior">Anotación posterior</label></td>
+ <?php if($action===1): ?>
+ <td><input type="text" name="anotacion_posterior" id="anotacion_posterior" value=" <?php echo static::e(isset($valores_antiguos['anotacion_posterior']) ? $valores_antiguos['anotacion_posterior'] : ''); ?>"></td>
+ <?php elseif($action===2): ?>
  <td><input type="text" name="anotacion_posterior" id="anotacion_posterior" value=" <?php echo static::e(isset($tarea->anotacion_posterior) ? $tarea->anotacion_posterior : ''); ?>"></td>
+ <?php endif; ?>
  </tr>
  <tr>
  <td colspan="2"><input type="submit" value="Enviar"></td>

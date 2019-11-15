@@ -7,6 +7,8 @@ define("CONTRA", "");
 define("ESQUEMA", "proyecto_1trimestre");
 
 // CONFIGURACIÓN BLADEONE
+// TODO: probar y puede que sustituir BladeOne por Jessengers' Blade. https://github.com/jenssegers/blade
+// TODO: Instalar Composer e inicializar Composer en el proyecto.
 include __DIR__.'\..\lib\BladeOne.php';
 use eftec\bladeone\BladeOne;
 

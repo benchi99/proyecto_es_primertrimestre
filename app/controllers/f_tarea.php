@@ -13,6 +13,19 @@ $errores = [
     "fecha_realizacion" => null
 ];
 
+$campos_insertados = [
+    "descripcion" => null,
+    "poblacion" => null,
+    "cp" => null,
+    "provincia" => null,
+    "persona_contacto" => null,
+    "estado" => null,
+    "persona_encargada" => null,
+    "fecha_realizacion" => null,
+    "anotacion_anterior" => null,
+    "anotacion_posterior" => null
+];
+
 if (!$_GET) {
     // Hacer algo
 } else {
@@ -26,7 +39,9 @@ if (!$_GET) {
                     try {
                         echo $blade->run('Tareas.f_tareas', ["action" => 1,
                             "usuarios" => $usuarios,
-                            "errores" => $errores]);
+                            "errores" => $errores,
+                            "valores_antiguos" => $campos_insertados
+                        ]);
                     } catch (Exception $e) {
                         echo $e->getMessage();
                     }
@@ -34,31 +49,35 @@ if (!$_GET) {
                     // Hay datos de formulario, el usuario está intentando insertar a BD
                     if (valida_datos()) {   // Los datos insertados son correctos.
                         try {
-                            $tarea_nueva = new Tarea([
-                                'descripcion' => $_POST['descripcion'],
-                                'poblacion' => $_POST['poblacion'],
-                                'codigo_postal' => $_POST['cp'],
-                                'provincia' => $_POST['provincia'],
-                                'persona_contacto' => $_POST['persona_contacto'],
-                                'estado' => 0,
-                                'fecha_creacion' => time('d/m/Y'),
-                                'persona_encargada' => isset($_POST['persona_encargada']) ? $_POST['persona_encargada'] : 0,
-                                'fecha_realizacion' => $_POST['fecha_realizacion'],
-                                'anotacion_anterior' => isset($_POST['anotacion_anterior']) ? $_POST['anotacion_anterior'] : '',
-                                'anotacion_posterior' => isset($_POST['anotacion_posterior']) ? $_POST['anotacion_posterior'] : '',
-                            ]);
-
-                            $tarea_nueva->commit_to_database();
+//                            $tarea_nueva = new Tarea([
+//                                'descripcion' => $_POST['descripcion'],
+//                                'poblacion' => $_POST['poblacion'],
+//                                'codigo_postal' => $_POST['cp'],
+//                                'provincia' => $_POST['provincia'],
+//                                'persona_contacto' => $_POST['persona_contacto'],
+//                                'estado' => 0,
+//                                'fecha_creacion' => time('d/m/Y'),
+//                                'persona_encargada' => isset($_POST['persona_encargada']) ? $_POST['persona_encargada'] : 0,
+//                                'fecha_realizacion' => $_POST['fecha_realizacion'],
+//                                'anotacion_anterior' => isset($_POST['anotacion_anterior']) ? $_POST['anotacion_anterior'] : '',
+//                                'anotacion_posterior' => isset($_POST['anotacion_posterior']) ? $_POST['anotacion_posterior'] : '',
+//                            ]);
+//
+//                            $tarea_nueva->commit_to_database();
+                            echo 'la tarea insertada cumple los requisitos';
                         } catch (Exception $e) {
                             echo $e->getMessage();
                         }
 
                         // Enviar a ventana de éxito.
                     } else {    // Los datos insertados no son correctos.
+                        obtain_set_values();
                         try {
                             echo $blade->run('Tareas.f_tareas', ['action' => 1,
                                 "usuarios" => $usuarios,
-                                "errores" => $errores]);
+                                "errores" => $errores,
+                                "valores_antiguos" => $campos_insertados
+                            ]);
                         } catch (Exception $e) {
                             echo $e->getMessage();
                         }
@@ -75,7 +94,8 @@ if (!$_GET) {
                         echo $blade->run('Tareas.f_tareas', ["action" => 2,
                             "tarea" => $tarea,
                             "usuarios" => $usuarios,
-                            "errores" => $errores
+                            "errores" => $errores,
+                            "valores_antiguos" => $campos_insertados
                         ]);
                     } catch (Exception $e) {
                         echo $e->getMessage();
@@ -133,18 +153,62 @@ function valida_datos() {
     if (empty($_POST['fecha_realizacion'])) {
         $GLOBALS['errores']['fecha_realizacion'] = "No se ha insertado fecha de realización.";
         $estado = false;
-    } else if (!valida_fecha($_POST['fecha_realizacion'])) {
-        $GLOBALS['errores']['fecha_realizacion'] = "La fecha insertada es inválida.";
-        $estado = false;
     } else if (!preg_match("/[0-9]{2}\W[0-9]{2}\W[0-9]{4}/", $_POST['fecha_realizacion'])) {
         $GLOBALS['errores']['fecha_realizacion'] = "La estructura de la fecha es incorrecta.";
         $estado = false;
-    } else if ($_POST['fecha_realizacion'] > time('d/m/Y')) {
+    } else if (!valida_fecha($_POST['fecha_realizacion'])) {
+        $GLOBALS['errores']['fecha_realizacion'] = "La fecha insertada es inválida.";
+        $estado = false;
+    }  else if ($_POST['fecha_realizacion'] < date('d-m-Y')) {
         $GLOBALS['errores']['fecha_realizacion'] = "La fecha establecida es anterior a la fecha actual.";
         $estado = false;
     }
 
     return $estado;
+}
+
+function obtain_set_values() {
+    // TODO: de alguna manera cambiar esta función que es puto horrible por dios urgh
+
+    if (isset($_POST['descripcion'])) {
+        $GLOBALS['campos_insertados']['descripcion'] = $_POST['descripcion'];
+    }
+
+    if (isset($_POST['poblacion'])) {
+        $GLOBALS['campos_insertados']['poblacion'] = $_POST['poblacion'];
+    }
+
+    if (isset($_POST['cp'])) {
+        $GLOBALS['campos_insertados']['cp'] = $_POST['cp'];
+    }
+
+    if (isset($_POST['persona_contacto'])) {
+        $GLOBALS['campos_insertados']['persona_contacto'] = $_POST['persona_contacto'];
+    }
+
+    if (isset($_POST['estado'])) {
+        $GLOBALS['campos_insertados']['estado'] = $_POST['estado'];
+    }
+
+    if (isset($_POST['fecha_creacion'])) {
+        $GLOBALS['campos_insertados']['fecha_creacion'] = $_POST['fecha_creacion'];
+    }
+
+    if (isset($_POST['persona_encargada'])) {
+        $GLOBALS['campos_insertados']['persona_encargada'] = $_POST['persona_encargada'];
+    }
+
+    if (isset($_POST['fecha_realizacion'])) {
+        $GLOBALS['campos_insertados']['fecha_realizacion'] = $_POST['fecha_realizacion'];
+    }
+
+    if (isset($_POST['anotacion_anterior'])) {
+        $GLOBALS['campos_insertados']['anotacion_anterior'] = $_POST['anotacion_anterior'];
+    }
+
+    if (isset($_POST['anotacion_posterior'])) {
+        $GLOBALS['campos_insertados']['anotacion_posterior'] = $_POST['anotacion_posterior'];
+    }
 }
 
 function valida_fecha($fecha, $formato = 'd-m-Y') {
