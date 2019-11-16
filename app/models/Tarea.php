@@ -93,6 +93,7 @@ class Tarea implements iDBTemplate
             $conexion = $bd->get_connection();
 
             $resultado = $conexion->query("INSERT INTO pryt1_tarea VALUES (
+                                null,
                                 '".$this->descripcion."',
                                 '".$this->poblacion."',
                                 '".$this->codigo_postal."',
@@ -103,13 +104,15 @@ class Tarea implements iDBTemplate
                                 '".$this->persona_encargada."',
                                 '".$this->fecha_realizacion."', 
                                 '".$this->anotacion_anterior."',
-                                '".$this->anotacion_posterior."')");
+                                '".$this->anotacion_posterior."')"
+            );
 
-            if ($resultado) {
-                echo "Los datos han sido insertados correctamente.";
-            } else {
-                echo "Ha ocurrido un error.".$conexion->error;
-            }
+            return $resultado;
+//            if ($resultado) {
+//                echo "Los datos han sido insertados correctamente.";
+//            } else {
+//                echo "Ha ocurrido un error.".$conexion->error;
+//            }
         } else {
             // Vamos a actualizar
 

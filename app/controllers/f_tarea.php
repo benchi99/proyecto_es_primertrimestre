@@ -49,22 +49,27 @@ if (!$_GET) {
                     // Hay datos de formulario, el usuario está intentando insertar a BD
                     if (valida_datos()) {   // Los datos insertados son correctos.
                         try {
-//                            $tarea_nueva = new Tarea([
-//                                'descripcion' => $_POST['descripcion'],
-//                                'poblacion' => $_POST['poblacion'],
-//                                'codigo_postal' => $_POST['cp'],
-//                                'provincia' => $_POST['provincia'],
-//                                'persona_contacto' => $_POST['persona_contacto'],
-//                                'estado' => 0,
-//                                'fecha_creacion' => time('d/m/Y'),
-//                                'persona_encargada' => isset($_POST['persona_encargada']) ? $_POST['persona_encargada'] : 0,
-//                                'fecha_realizacion' => $_POST['fecha_realizacion'],
-//                                'anotacion_anterior' => isset($_POST['anotacion_anterior']) ? $_POST['anotacion_anterior'] : '',
-//                                'anotacion_posterior' => isset($_POST['anotacion_posterior']) ? $_POST['anotacion_posterior'] : '',
-//                            ]);
-//
-//                            $tarea_nueva->commit_to_database();
-                            echo 'la tarea insertada cumple los requisitos';
+                            $tarea_nueva = new Tarea([
+                                'descripcion' => $_POST['descripcion'],
+                                'poblacion' => $_POST['poblacion'],
+                                'codigo_postal' => intval($_POST['cp']),
+                                'provincia' => $_POST['provincia'],
+                                'persona_contacto' => intval($_POST['persona_contacto']),
+                                'estado' => 0,
+                                'fecha_creacion' => date('Y-m-d'),
+                                'persona_encargada' => isset($_POST['persona_encargada']) ? intval($_POST['persona_encargada']) : 0,
+                                'fecha_realizacion' => DateTime::createFromFormat('d-m-Y', $_POST['fecha_realizacion'])->format('Y-m-d'),
+                                'anotacion_anterior' => isset($_POST['anotacion_anterior']) ? $_POST['anotacion_anterior'] : '',
+                                'anotacion_posterior' => isset($_POST['anotacion_posterior']) ? $_POST['anotacion_posterior'] : '',
+                            ]);
+
+                            if ($tarea_nueva->commit_to_database()) {
+                                header("Location: listar.php");
+                            } else {
+                                // TODO: Plantilla de error.
+                                echo "WROOOOOOOOOOOOOOOOOOOONG!";
+                            }
+
                         } catch (Exception $e) {
                             echo $e->getMessage();
                         }
@@ -133,7 +138,7 @@ function valida_datos() {
     if (empty($_POST['cp'])) {
         $GLOBALS['errores']['cp'] = "No se ha insertado ningún código postal." ;
         $estado = false;
-    } else if (strlen($_POST['cp']) <= 5) {
+    } else if (strlen($_POST['cp']) < 5) {
         $GLOBALS['errores']['cp'] = "El código postal insertado es inválido.";
         $estado = false;
     }
@@ -159,7 +164,7 @@ function valida_datos() {
     } else if (!valida_fecha($_POST['fecha_realizacion'])) {
         $GLOBALS['errores']['fecha_realizacion'] = "La fecha insertada es inválida.";
         $estado = false;
-    }  else if ($_POST['fecha_realizacion'] < date('d-m-Y')) {
+    }  else if (strtotime($_POST['fecha_realizacion']) < strtotime(date('d-m-Y'))) {
         $GLOBALS['errores']['fecha_realizacion'] = "La fecha establecida es anterior a la fecha actual.";
         $estado = false;
     }

@@ -1,5 +1,6 @@
 <?php
 // TODO: añadir bien los usuarios cuando toque por dios tengo que repasar putas sesiones y mierdas de esa hostiaAAAAAAAA
+    require_once __DIR__.'/../config.php';
     require_once __DIR__ . '/consultas_comunes.php';
 
     $tareas = obtain_all_tasks();
