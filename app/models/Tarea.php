@@ -1,5 +1,6 @@
 <?php
-require 'iDBTemplate.php';
+require_once __DIR__.'/iDBTemplate.php';
+require_once __DIR__ . '/bd_gest.php';
 
 class Tarea implements iDBTemplate
 {
@@ -28,7 +29,9 @@ class Tarea implements iDBTemplate
     }
 
     private function __construye_todos_params($data) {
-        $this->id = $data['id'];
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
         $this->descripcion = $data['descripcion'];
         $this->poblacion = $data['poblacion'];
         $this->codigo_postal = $data['codigo_postal'];
@@ -48,7 +51,7 @@ class Tarea implements iDBTemplate
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
 
-        $consulta = $conexion->query("SELECT * FROM ".TABLA_TAREAS." WHERE tsk_id = '".$id."'");
+        $consulta = $conexion->query("SELECT * FROM pryt1_tarea WHERE tsk_id = '".$id."'");
         if (!$consulta) {
             echo "Error lol";
         } else {
@@ -69,8 +72,7 @@ class Tarea implements iDBTemplate
     }
 
     private function __vienen_todos_los_datos($data) {
-        return isset($data['id']) &&
-            isset($data['descripcion']) &&
+        return isset($data['descripcion']) &&
             isset($data['poblacion']) &&
             isset($data['codigo_postal']) &&
             isset($data['provincia']) &&
@@ -83,13 +85,42 @@ class Tarea implements iDBTemplate
             isset($data['anotacion_posterior']);
     }
 
-    public function es_valido()
-    {
-        // TODO: Implement es_valido() method.
-    }
-
     public function commit_to_database()
     {
-        // TODO: Implement commit_to_database() method.
+        if (!$this->id) {
+            // Vamos a insertar
+            $bd = bd_gest::get_instance();
+            $conexion = $bd->get_connection();
+
+            $resultado = $conexion->query("INSERT INTO pryt1_tarea VALUES (
+                                null,
+                                '".$this->descripcion."',
+                                '".$this->poblacion."',
+                                '".$this->codigo_postal."',
+                                '".$this->provincia."',
+                                '".$this->persona_contacto."',
+                                '".$this->estado."',
+                                '".$this->fecha_creacion."',
+                                '".$this->persona_encargada."',
+                                '".$this->fecha_realizacion."', 
+                                '".$this->anotacion_anterior."',
+                                '".$this->anotacion_posterior."')"
+            );
+
+            return $resultado;
+//            if ($resultado) {
+//                echo "Los datos han sido insertados correctamente.";
+//            } else {
+//                echo "Ha ocurrido un error.".$conexion->error;
+//            }
+        } else {
+            // Vamos a actualizar
+
+        }
+    }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
     }
 }

@@ -1,5 +1,6 @@
 <?php
-require 'iDBTemplate.php';
+require_once __DIR__.'/iDBTemplate.php';
+require_once __DIR__ . '/bd_gest.php';
 
 class Usuario implements iDBTemplate
 {
@@ -26,7 +27,9 @@ class Usuario implements iDBTemplate
     
     private function __construye_todos_params($data)
     {
-        $this->id = $data['id'];
+        if (isset($data['id'])) {
+            $this->id = $data['id'];
+        }
         $this->nombre_usuario = $data['nombre_usuario'];
         $this->nombre = $data['nombre'];
         $this->apellidos = $data['apellidos'];
@@ -42,7 +45,7 @@ class Usuario implements iDBTemplate
 
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
-        $consulta = $conexion->query("SELECT * FROM " . TABLA_USUARIOS . " WHERE usr_id = '.$id.'");
+        $consulta = $conexion->query('SELECT * FROM pryt1_usuarios WHERE usr_id = "'.$id.'"');
 
         if (!$consulta) {
             echo "Error lol";
@@ -57,7 +60,6 @@ class Usuario implements iDBTemplate
                 $this->rol = $fila['usr_rol'];
             }
         }
-
     }
 
     public function get_full_name()
@@ -71,30 +73,19 @@ class Usuario implements iDBTemplate
         $conexion = $bd->get_connection();
         $result = [];
 
-        $ids = $conexion->query("SELECT tsk_id FROM " . TABLA_TAREAS . " 
+        $ids = $conexion->query("SELECT tsk_id FROM pryt1_tarea 
                                       WHERE tsk_persona_encargada = " . $this->id);
 
         while ($fila = $ids->fetch_assoc()) {
-            $result[] += new Tarea($ids['tsk_id']);
+            array_push($result, new Tarea($ids['tsk_id']));
         }
 
         return $result;
     }
 
-    public function commit_to_database()
-    {
-        // TODO: Insertar a base de datos.
-    }
-
-    public function es_valido()
-    {
-        // TODO: Validar si datos son válidos.
-    }
-
     private function __vienen_todos_los_datos($data)
     {
-        return isset($data['id']) &&
-            isset($data['nombre_usuario']) &&
+        return isset($data['nombre_usuario']) &&
             isset($data['nombre']) &&
             isset($data['apellidos']) &&
             isset($data['telefono']) &&
@@ -103,4 +94,13 @@ class Usuario implements iDBTemplate
             isset($data['rol']);
     }
 
+    public function commit_to_database()
+    {
+        // TODO: Implement commit_to_database() method.
+    }
+
+    public function delete()
+    {
+        // TODO: Implement delete() method.
+    }
 }
