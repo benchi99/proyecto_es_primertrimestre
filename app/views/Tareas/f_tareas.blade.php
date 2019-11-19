@@ -2,7 +2,10 @@
 
 <h2>Tarea</h2>
 
-<form action="@relative('app/controllers/f_tarea.php?action=1')" method="POST">
+<form action='@relative("app/controllers/f_tarea.php?action={$action}")' method="POST">
+    @if($action===2)
+        <input type="hidden" name="id" id="id" value="{{ $tarea-> id }}">
+    @endIf
     <table>
         <tr>
             <td><label for="descripcion">Descripción</label></td>
@@ -54,6 +57,7 @@
         <tr>
             <td><label for="provincia">Provincia</label></td>
             <td>
+                <!-- Dios santo tirar de db ok? ok-->
                 <select name="provincia" id="provincia">
                     <option value='alava'>Álava</option>
                     <option value='albacete'>Albacete</option>

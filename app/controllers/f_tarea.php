@@ -78,7 +78,8 @@ if (!$_GET) {
                     } else {    // Los datos insertados no son correctos.
                         obtain_set_values();
                         try {
-                            echo $blade->run('Tareas.f_tareas', ['action' => 1,
+                            echo $blade->run('Tareas.f_tareas', [
+                                "action" => 1,
                                 "usuarios" => $usuarios,
                                 "errores" => $errores,
                                 "valores_antiguos" => $campos_insertados
@@ -91,19 +92,71 @@ if (!$_GET) {
                 break;
             case 2:
                 // Comprobar si viene id a editar
-                if (isset($_GET['task_id'])) {
-                    // Obtener tarea
-                    // Enviar objeto tarea a formulario
-                    try {
-                        $tarea = new Tarea(["id" => $_GET['task_id']]);
-                        echo $blade->run('Tareas.f_tareas', ["action" => 2,
-                            "tarea" => $tarea,
-                            "usuarios" => $usuarios,
-                            "errores" => $errores,
-                            "valores_antiguos" => $campos_insertados
-                        ]);
-                    } catch (Exception $e) {
-                        echo $e->getMessage();
+                if (isset($_GET['task_id']) || isset($_POST['id'])) {
+                    if (!$_POST) {
+                        // Obtener tarea
+                        // Enviar objeto tarea a formulario
+                        try {
+                            $tarea = new Tarea(["id" => $_GET['task_id']]);
+                            echo $blade->run('Tareas.f_tareas', [
+                                "action" => 2,
+                                "tarea" => $tarea,
+                                "usuarios" => $usuarios,
+                                "errores" => $errores,
+                                "valores_antiguos" => $campos_insertados
+                            ]);
+                        } catch (Exception $e) {
+                            echo $e->getMessage();
+                        }
+                    } else {
+                        // El usuario quiere actualizar la tarea.
+                        // Obtener la tarea a editar, y editarla.
+                        try {
+                            $tarea = new Tarea(["id" => $_POST['id']]);
+                        } catch (Exception $e) {
+                            echo $e->getMessage();
+                        }
+
+                        $tarea->descripcion = $_POST['descripcion'];
+                        $tarea->poblacion = $_POST['poblacion'];
+                        $tarea->codigo_postal = $_POST['cp'];
+                        $tarea->provincia = $_POST['provincia'];
+                        $tarea->persona_contacto = $_POST['persona_contacto'];
+                        $tarea->estado = $_POST['estado'];
+                        $tarea->fecha_creacion = $_POST['fecha_creacion'];
+                        $tarea->persona_encargada = $_POST['persona_encargada'];
+                        $tarea->fecha_realizacion = DateTime::createFromFormat('d-m-Y', $_POST['fecha_realizacion'])->format('Y-m-d');
+                        $tarea->anotacion_anterior = $_POST['anotacion_anterior'];
+                        $tarea->anotacion_posterior = $_POST['anotacion_posterior'];
+
+                        if (valida_datos()) { // Los datos a editar son válidos
+                            try {
+                                $estado = $tarea->commit_to_database();
+
+                                if ($estado) {
+                                    header("Location: listar.php?status=1");
+                                } else {
+                                    // TODO: Plantilla de error.
+                                    echo "Hubo un error al actualizar la tarea.";
+                                }
+                            } catch (Exception $e) {
+                                $e->getMessage();
+                            }
+
+                        } else { // Los datos a editar NO son válidos.
+                            obtain_set_values();
+                            try {
+                                echo $blade->run('Tareas.f_tareas', [
+                                    "action" => 2,
+                                    "tarea" => $tarea,
+                                    "usuarios" => $usuarios,
+                                    "errores" => $errores,
+                                    "valores_antiguos" => $campos_insertados
+                                ]);
+                            } catch (Exception $e) {
+                                $e->getMessage();
+                            }
+                        }
                     }
                 }
                 break;
@@ -174,6 +227,10 @@ function valida_datos() {
 
 function obtain_set_values() {
     // TODO: de alguna manera cambiar esta función que es puto horrible por dios urgh
+
+    if (isset($_POST['id'])) {
+        $GLOBALS['campos_insertados']['id'] = $_POST['descripcion'];
+    }
 
     if (isset($_POST['descripcion'])) {
         $GLOBALS['campos_insertados']['descripcion'] = $_POST['descripcion'];
