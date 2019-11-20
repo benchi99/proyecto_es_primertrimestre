@@ -64,7 +64,7 @@ if (!$_GET) {
                             ]);
 
                             if ($tarea_nueva->commit_to_database()) {
-                                header("Location: listar.php");
+                                header("Location: listar.php?status=1");
                             } else {
                                 // TODO: Plantilla de error.
                                 echo "WROOOOOOOOOOOOOOOOOOOONG!";
@@ -134,7 +134,7 @@ if (!$_GET) {
                                 $estado = $tarea->commit_to_database();
 
                                 if ($estado) {
-                                    header("Location: listar.php?status=1");
+                                    header("Location: listar.php?status=2");
                                 } else {
                                     // TODO: Plantilla de error.
                                     echo "Hubo un error al actualizar la tarea.";
@@ -164,7 +164,17 @@ if (!$_GET) {
                 // Comprobar si viene id al eliminar
                 if (isset($_GET['task_id'])) {
                     // Obtener tarea y enviar señal para eliminar
-                    // TODO: hacer justo lo que pone en el comentario encima mío
+                    try {
+                        $tarea = new Tarea(['id' => $_GET['task_id']]);
+                    } catch (Exception $e) {
+                        $e->getMessage();
+                    }
+                    if ($tarea->id) {
+                        $tarea->delete();
+                        header("Location: listar.php?status=3");
+                    } else {
+                        // TODO: Plantillas de error.
+                    }
                 }
         }
     } else {
