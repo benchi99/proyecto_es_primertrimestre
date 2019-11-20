@@ -150,4 +150,18 @@ class Tarea implements iDBTemplate
 
         return $resultado;
     }
+
+    public function complete_task() {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+
+        $resultado = $conexion->query("SELECT * FROM pryt1_tarea WHERE tsk_id = " . $this->id);
+        if ($resultado->num_rows === 1) {
+            $resultado_completar = $conexion->query('UPDATE pryt1_tarea SET tsk_estado = 1 WHERE tsk_id = '.$this->id);
+
+            return $resultado_completar;
+        } else {
+            return $resultado;
+        }
+    }
 }

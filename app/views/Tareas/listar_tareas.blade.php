@@ -29,11 +29,8 @@
         <tbody>
             @foreach($tareas as $tarea)
                 <tr>
-{{--                    <td>{{ $tarea->id }}</td>--}}
                     <td>{{ $tarea->descripcion }}</td>
                     <td>{{ $tarea->poblacion }}</td>
-{{--                    <td>{{ $tarea->codigo_postal }}</td>--}}
-{{--                    <td>{{ $tarea->provincia }}</td>--}}
                     <td>
                         @foreach($usuarios as $usuario)
                              @if($usuario->id === $tarea->persona_contacto)
@@ -41,7 +38,13 @@
                              @endif
                         @endforeach
                     </td>
-                    <td>{{ $tarea->estado }}</td>
+                    <td>
+                        @if($tarea->estado == 0)
+                            Pendiente
+                        @elseif($tarea->estado == 1)
+                            Completado
+                        @endif
+                    </td>
                     <td>{{ $tarea->fecha_creacion }}</td>
                     <td>
                         @foreach($usuarios as $usuario)
@@ -56,6 +59,8 @@
                     <td>
                         <a href='@relative("app/controllers/f_tarea.php?action=2&task_id={$tarea->id}")'>
                             <i class="fas fa-edit"></i> Editar</a>
+                        <a href='@relative("app/controllers/f_tarea.php?action=4&task_id={$tarea->id}")'>
+                            <i class="fas fa-check"></i> Completar</a>
                         <a href='@relative("app/controllers/f_tarea.php?action=3&task_id={$tarea->id}")'>
                             <i class="fas fa-eraser"></i> Eliminar</a>
                     </td>
@@ -64,11 +69,8 @@
         </tbody>
         <tfoot>
             <tr>
-{{--                <td>ID</td>--}}
                 <td>Descripcion</td>
                 <td>Población</td>
-{{--                <td>Código Postal</td>--}}
-{{--                <td>Provincia</td>--}}
                 <td>Persona de contacto</td>
                 <td>Estado</td>
                 <td>Fecha de creación</td>

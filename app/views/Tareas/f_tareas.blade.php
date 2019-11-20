@@ -57,7 +57,7 @@
         <tr>
             <td><label for="provincia">Provincia</label></td>
             <td>
-                <!-- Dios santo tirar de db ok? ok-->
+                <!-- TODO: TIRAR DE BD POR EL AMOR DE DIOS -->
                 <select name="provincia" id="provincia">
                     <option value='alava'>Álava</option>
                     <option value='albacete'>Albacete</option>
@@ -148,6 +148,17 @@
         @if($action===2)
             <tr>
                 <td><label for="estado">Estado</label></td>
+                <td>
+                    <select name="estado" id="estado">
+                        @if ($tarea->estado == 0)
+                            <option value="0" selected>Pendiente</option>
+                            <option value="1">Completado</option>
+                        @elseif($tarea->estado == 1)
+                            <option value="0">Pendiente</option>
+                            <option value="1" selected>Completado</option>
+                        @endif
+                    </select>
+                </td>
                 <td><input type="text" name="estado" id="estado" value="{{ $tarea->estado or '' }}"></td>
             </tr>
         @endif
