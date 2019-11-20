@@ -44,8 +44,6 @@
  Pendiente
  <?php elseif($tarea->estado == 1): ?>
  Completado
- <?php else: ?>
- que te follen
  <?php endif; ?>
  </td>
  <td><?php echo static::e($tarea->fecha_creacion); ?></td>
@@ -73,11 +71,8 @@
  </tbody>
  <tfoot>
  <tr>
-<?php /*                <td>ID</td>*/ ?>
  <td>Descripcion</td>
  <td>Población</td>
-<?php /*                <td>Código Postal</td>*/ ?>
-<?php /*                <td>Provincia</td>*/ ?>
  <td>Persona de contacto</td>
  <td>Estado</td>
  <td>Fecha de creación</td>
