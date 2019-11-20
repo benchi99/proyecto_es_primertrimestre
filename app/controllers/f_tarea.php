@@ -176,12 +176,35 @@ if (!$_GET) {
                         // TODO: Plantillas de error.
                     }
                 }
+                break;
+            case 4:
+                if (isset($_GET['task_id'])) {
+                    try {
+                        $tarea = new Tarea(['id' => $_GET['task_id']]);
+                    } catch (Exception $e) {
+                        $e->getMessage();
+                    }
+
+                    if (!$tarea->complete_task()) {
+                        // TODO: Plantilla de error.
+                    } else {
+                        header("Location: listar.php?status=4");
+                    }
+                } else {
+                    // TODO: Plantilla de error.
+                }
+                break;
         }
     } else {
         // TODO: Plantillas de error.
     }
 }
 
+/**
+ * Valido los datos insertados según las especificaciones de la tarea.
+ *
+ * @return bool
+ */
 function valida_datos() {
     $estado = true;
 
@@ -235,6 +258,9 @@ function valida_datos() {
     return $estado;
 }
 
+/**
+ * Obtiene todos los valores de $_POST del formulario de tareas y los guarda en un array.
+ */
 function obtain_set_values() {
     // TODO: de alguna manera cambiar esta función que es puto horrible por dios urgh
 
