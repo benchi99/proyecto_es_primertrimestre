@@ -187,6 +187,8 @@ if (!$_GET) {
 
                     if (!$tarea->complete_task()) {
                         // TODO: Plantilla de error.
+                    } else {
+                        header("Location: listar.php?status=4");
                     }
                 } else {
                     // TODO: Plantilla de error.
