@@ -91,6 +91,7 @@ class Tarea implements iDBTemplate
 
     public function commit_to_database()
     {
+        $result_package = [];
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
 
