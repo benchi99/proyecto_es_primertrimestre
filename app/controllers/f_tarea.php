@@ -66,8 +66,7 @@ if (!$_GET) {
                             if ($tarea_nueva->commit_to_database()) {
                                 header("Location: listar.php?status=1");
                             } else {
-                                // TODO: Plantilla de error.
-                                echo "WROOOOOOOOOOOOOOOOOOOONG!";
+                                echo $blade->run('Error.error', ['error' => 'La tarea no se ha insertado correctamente. Contacte con el administrador.']);
                             }
 
                         } catch (Exception $e) {
@@ -117,6 +116,7 @@ if (!$_GET) {
                             echo $e->getMessage();
                         }
 
+                        // TODO: posiblemente encapsular esto dentro del modelo de la tarea.
                         $tarea->descripcion = $_POST['descripcion'];
                         $tarea->poblacion = $_POST['poblacion'];
                         $tarea->codigo_postal = $_POST['cp'];
@@ -136,8 +136,11 @@ if (!$_GET) {
                                 if ($estado) {
                                     header("Location: listar.php?status=2");
                                 } else {
-                                    // TODO: Plantilla de error.
-                                    echo "Hubo un error al actualizar la tarea.";
+                                    try {
+                                        echo $blade->run('Error.error', ['error' => 'Error al actualizar tarea: No se ha podido actualizar el dato. Contácta con el administrador.']);
+                                    } catch (Exception $e) {
+                                        $e->getMessage();
+                                    }
                                 }
                             } catch (Exception $e) {
                                 $e->getMessage();
@@ -158,6 +161,12 @@ if (!$_GET) {
                             }
                         }
                     }
+                } else {
+                    try {
+                        echo $blade->run('Error.error', ['error' => 'Error al obtener tarea: No se ha especificado ID.']);
+                    } catch (Exception $e) {
+                        $e->getMessage();
+                    }
                 }
                 break;
             case 3:
@@ -173,7 +182,17 @@ if (!$_GET) {
                         $tarea->delete();
                         header("Location: listar.php?status=3");
                     } else {
-                        // TODO: Plantillas de error.
+                        try {
+                            echo $blade->run('Error.error', ['error' => 'Error al eliminar tarea: Esta tarea no existe.']);
+                        } catch (Exception $e) {
+                            $e->getMessage();
+                        }
+                    }
+                } else {
+                    try {
+                        echo $blade->run('Error.error', ['error' => 'Error al obtener tarea: No se ha especificado ID.']);
+                    } catch (Exception $e) {
+                        $e->getMessage();
                     }
                 }
                 break;
@@ -184,19 +203,30 @@ if (!$_GET) {
                     } catch (Exception $e) {
                         $e->getMessage();
                     }
-
                     if (!$tarea->complete_task()) {
-                        // TODO: Plantilla de error.
+                        try {
+                            echo $blade->run('Error.error', ['error' => 'Error al completar tarea: No se ha podido actualizar el dato. Contácta con el administrador.']);
+                        } catch (Exception $e) {
+                            $e->getMessage();
+                        }
                     } else {
                         header("Location: listar.php?status=4");
                     }
                 } else {
-                    // TODO: Plantilla de error.
+                    try {
+                        echo $blade->run('Error.error', ['error' => 'Error al obtener tarea: No se ha especificado ID.']);
+                    } catch (Exception $e) {
+                        $e->getMessage();
+                    }
                 }
                 break;
         }
     } else {
-        // TODO: Plantillas de error.
+        try {
+            echo $blade->run('Error.error', ['error' => 'Acceso denegado a URL.']);
+        } catch (Exception $e) {
+            $e->getMessage();
+        }
     }
 }
 
