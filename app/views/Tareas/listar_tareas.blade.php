@@ -27,7 +27,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($tareas as $tarea)
+            @for($i = 0; $i < $limite; $i++)
+                @if(($i+$limite_comienzo) < $total_pgs)
+                @set($tarea = $tareas[$i+$limite_comienzo])
                 <tr>
                     <td>{{ $tarea->descripcion }}</td>
                     <td>{{ $tarea->poblacion }}</td>
@@ -65,7 +67,8 @@
                             <i class="fas fa-eraser"></i> Eliminar</a>
                     </td>
                 </tr>
-            @endforeach
+                @endif
+            @endfor
         </tbody>
         <tfoot>
             <tr>
@@ -82,5 +85,23 @@
             </tr>
         </tfoot>
     </table>
+    <br>
+    <br>
+    <nav aria-label="pagination">
+        <ul class="pagination justify-content-center">
+            @for($page = 1; $page <= $total_pgs; $page++)
+                @if($page === $pagina_actual)
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+                        {{ $page }}
+                        <span class="sr-only">(current)</span>
+                    </span>
+                </li>
+                @else
+                    <li class="page-item"><a href="?page={{$page}}" class="page-link">{{$page}}</a></li>
+                @endif
+            @endfor
+        </ul>
+    </nav>
 
 @include('General.pie')
