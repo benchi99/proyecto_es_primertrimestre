@@ -6,8 +6,9 @@
     $tareas = obtain_all_tasks();
     $usuarios = obtain_all_users();
 
-    $limite = 5;
-    $total_pgs = ceil(count($tareas)/$limite);
+    $limite = 4;
+    $num_tareas = count($tareas);
+    $total_pgs = intval(ceil($num_tareas/$limite));
     $pagina_actual = get_current_page();
 
     $limite_comienzo = ($pagina_actual-1) * $limite;
@@ -18,6 +19,7 @@
             "usuarios" => $usuarios,
             "limite" => $limite,
             "limite_comienzo" => $limite_comienzo,
+            "num_tareas" => $num_tareas,
             "total_pgs" => $total_pgs,
             "pagina_actual" => $pagina_actual
             ]);
