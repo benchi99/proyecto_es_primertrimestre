@@ -60,7 +60,7 @@
  <tr>
  <td><label for="provincia">Provincia</label></td>
  <td>
- <!-- Dios santo tirar de db ok? ok-->
+ <!-- TODO: TIRAR DE BD POR EL AMOR DE DIOS -->
  <select name="provincia" id="provincia">
  <option value='alava'>Álava</option>
  <option value='albacete'>Albacete</option>
@@ -153,6 +153,17 @@
  <?php if($action===2): ?>
  <tr>
  <td><label for="estado">Estado</label></td>
+ <td>
+ <select name="estado" id="estado">
+ <?php if($tarea->estado == 0): ?>
+ <option value="0" selected>Pendiente</option>
+ <option value="1">Completado</option>
+ <?php elseif($tarea->estado == 1): ?>
+ <option value="0">Pendiente</option>
+ <option value="1" selected>Completado</option>
+ <?php endif; ?>
+ </select>
+ </td>
  <td><input type="text" name="estado" id="estado" value="<?php echo static::e(isset($tarea->estado) ? $tarea->estado : ''); ?>"></td>
  </tr>
  <?php endif; ?>
