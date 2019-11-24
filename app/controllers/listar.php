@@ -3,7 +3,14 @@
     require_once __DIR__.'/../config.php';
     require_once __DIR__ . '/consultas_comunes.php';
 
-    $tareas = obtain_all_tasks();
+    $querystr = "";
+
+    if (isset($_GET['querystr'])) {
+        $querystr = $_GET['querystr'];
+        $tareas = get_tasks($_GET['querystr']);
+    } else {
+        $tareas = obtain_all_tasks();
+    }
     $usuarios = obtain_all_users();
 
     $limite = 4;
@@ -21,7 +28,8 @@
             "limite_comienzo" => $limite_comienzo,
             "num_tareas" => $num_tareas,
             "total_pgs" => $total_pgs,
-            "pagina_actual" => $pagina_actual
+            "pagina_actual" => $pagina_actual,
+            "querystr" => $querystr
             ]);
     } catch (Exception $e) {
         echo $e->getMessage();

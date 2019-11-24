@@ -81,3 +81,7 @@
             return $response_data;
         }
     }
+
+    function get_task_fitered_by(array $array) {
+
+    }
