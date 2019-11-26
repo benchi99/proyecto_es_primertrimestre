@@ -56,7 +56,7 @@ function actualizaSelectMunicipios(provincia) {
         method: 'GET',
         dataType: 'json',
         complete: (response) => {
-            let htmlContent = $('#poblaciones').html(), datos = JSON.parse(response.responseText);
+            let htmlContent = '', datos = JSON.parse(response.responseText);
 
             for (let dato of datos) {
                 let dato_json = JSON.parse(dato);

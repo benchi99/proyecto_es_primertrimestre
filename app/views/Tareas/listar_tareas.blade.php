@@ -58,6 +58,20 @@
                         <input class="form-control" type="text" name="fecha_realizacion" id="fecha_realizacion" placeholder="dd-mm-AAAA">
                     </li>
                 </ul>
+                <div class="d-flex justify-content-center">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="fechaRadioOptions" id="fechaRadio1" value="antesde">
+                            <label class="form-check-label" for="fechaRadio1">Antes de</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="fechaRadioOptions" id="fechaRadio2" value="fechaexacta">
+                            <label class="form-check-label" for="fechaRadio2">En la fecha</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="fechaRadioOptions" id="fechaRadio3" value="despuesde">
+                            <label class="form-check-label" for="fechaRadio3">Después de</label>
+                        </div>
+                </div>
             </div>
             <div class="p-2 flex-fill bd-highlight">
                 <h4>Por ubicación</h4>
@@ -72,8 +86,10 @@
                             <option value="-1" selected>Seleccione provincia</option>
                         </select>
                     </li>
+
                 </ul>
             </div>
+                        <button type="submit" class="btn btn-outline-light my-2 my-sm-0">Filtrar...</button>
         </form>
     </div>
 </div>

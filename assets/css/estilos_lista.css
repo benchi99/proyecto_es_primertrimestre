@@ -1,7 +1,8 @@
 div.collapse.navbar-collapse > ul.navbar-nav li.nav-item a.nav-link,
 nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.d-flex.justify-content-between a.navbar-brand,
 form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight h4,
-form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li label {
+form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li label,
+form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight div.d-flex.justify-content-center label {
     color: white;
 }
 
@@ -24,7 +25,9 @@ form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li {
     display: table-row;
 }
 
-form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li * {
+form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li label,
+form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li select,
+form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li input {
     display: table-cell;
     margin: .5em 1em .5em 1em;
 }

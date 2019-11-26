@@ -38,11 +38,11 @@
  <ul>
  <li>
  <label for="persona_contacto">De Contacto</label>
- <select name="persona_contacto" id="persona_contacto"></select>
+ <select class="form-control" name="persona_contacto" id="persona_contacto"></select>
  </li>
  <li>
  <label for="persona_encargada">Encargada</label>
- <select name="persona_encargada" id="persona_encargada"></select>
+ <select class="form-control" name="persona_encargada" id="persona_encargada"></select>
  </li>
  </ul>
  </div>
@@ -51,29 +51,45 @@
  <ul>
  <li>
  <label for="fecha_creacion">De creación</label>
- <input type="text" name="fecha_creacion" id="fecha_creacion" placeholder="dd-mm-AAAA">
+ <input class="form-control" type="text" name="fecha_creacion" id="fecha_creacion" placeholder="dd-mm-AAAA">
  </li>
  <li>
  <label for="fecha_realizacion">De realización</label>
- <input type="text" name="fecha_realizacion" id="fecha_realizacion" placeholder="dd-mm-AAAA">
+ <input class="form-control" type="text" name="fecha_realizacion" id="fecha_realizacion" placeholder="dd-mm-AAAA">
  </li>
  </ul>
+ <div class="d-flex justify-content-center">
+ <div class="form-check form-check-inline">
+ <input class="form-check-input" type="radio" name="fechaRadioOptions" id="fechaRadio1" value="antesde">
+ <label class="form-check-label" for="fechaRadio1">Antes de</label>
+ </div>
+ <div class="form-check form-check-inline">
+ <input class="form-check-input" type="radio" name="fechaRadioOptions" id="fechaRadio2" value="fechaexacta">
+ <label class="form-check-label" for="fechaRadio2">En la fecha</label>
+ </div>
+ <div class="form-check form-check-inline">
+ <input class="form-check-input" type="radio" name="fechaRadioOptions" id="fechaRadio3" value="despuesde">
+ <label class="form-check-label" for="fechaRadio3">Después de</label>
+ </div>
+ </div>
  </div>
  <div class="p-2 flex-fill bd-highlight">
  <h4>Por ubicación</h4>
  <ul>
  <li>
  <label for="provincias">Provincia</label>
- <select name="provincias" id="provincias" onchange="actualizaSelectMunicipios(this.selectedIndex)"></select>
+ <select class="form-control" name="provincias" id="provincias" onchange="actualizaSelectMunicipios(this.selectedIndex)"></select>
  </li>
  <li>
  <label for="poblaciones">Población</label>
- <select name="poblaciones" id="poblaciones" disabled>
+ <select class="form-control" name="poblaciones" id="poblaciones" disabled>
  <option value="-1" selected>Seleccione provincia</option>
  </select>
  </li>
+
  </ul>
  </div>
+ <button type="submit" class="btn btn-outline-light my-2 my-sm-0">Filtrar...</button>
  </form>
  </div>
 </div>
