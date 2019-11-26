@@ -27,12 +27,12 @@
         }
     }
 
-/**
- * Consulta a la base de datos para obtener todos los usuarios.
- *
- * @return array|bool|mysqli_result Consulta
- * @throws Exception Error al construir objetos de Usuario
- */
+    /**
+     * Consulta a la base de datos para obtener todos los usuarios.
+     *
+     * @return array|bool|mysqli_result Consulta
+     * @throws Exception Error al construir objetos de Usuario
+     */
     function obtain_all_users() {
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
@@ -50,27 +50,29 @@
         }
     }
 
-/**
- * @param $query_string
- * @return array|bool|mysqli_result
- * @throws Exception Error al construir objetos
- */
+    /**
+     * Obtiene tareas según un parámetro de búsqueda (usado en la barra de búsqueda)
+     * @param $query_string string Parámetro de búsuqeda
+     * @return array|bool|mysqli_result Resultado de consulta
+     * @throws Exception Error al construir objetos
+     */
     function get_tasks($query_string) {
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
+        $param = $conexion->real_escape_string($query_string);  // Inyéctame esta quieres
         $response_data = [];
 
-        $data = $conexion->query("SELECT tsk_id FROM pryt1_tarea WHERE tsk_descripcion like '%".$query_string."%' or
-                                tsk_poblacion like '%".$query_string."%' or
-                                tsk_cp like '%".$query_string."%' or
-                                tsk_provincia like '%".$query_string."%' or
-                                tsk_persona_contacto like '%".$query_string."%' or
-                                tsk_estado like '%".$query_string."%' or
-                                tsk_fecha_creacion like '%".$query_string."%' or
-                                tsk_persona_encargada like '%".$query_string."%' or
-                                tsk_fecha_realizacion like '%".$query_string."%' or
-                                tsk_anotacion_anterior like '%".$query_string."%' or
-                                tsk_anotacion_posterior like '%".$query_string."%'");
+        $data = $conexion->query("SELECT tsk_id FROM pryt1_tarea WHERE tsk_descripcion like '%".$param."%' or
+                                tsk_poblacion like '%".$param."%' or
+                                tsk_cp like '%".$param."%' or
+                                tsk_provincia like '%".$param."%' or
+                                tsk_persona_contacto like '%".$param."%' or
+                                tsk_estado like '%".$param."%' or
+                                tsk_fecha_creacion like '%".$param."%' or
+                                tsk_persona_encargada like '%".$param."%' or
+                                tsk_fecha_realizacion like '%".$param."%' or
+                                tsk_anotacion_anterior like '%".$param."%' or
+                                tsk_anotacion_posterior like '%".$param."%'");
 
         if (!$data) {
             return $data;

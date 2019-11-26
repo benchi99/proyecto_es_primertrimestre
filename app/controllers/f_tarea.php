@@ -292,7 +292,7 @@ function valida_datos() {
  * Obtiene todos los valores de $_POST del formulario de tareas y los guarda en un array.
  */
 function obtain_set_values() {
-    // TODO: de alguna manera cambiar esta función que es puto horrible por dios urgh
+    // TODO: VALORPOST/VALORGET
 
     if (isset($_POST['id'])) {
         $GLOBALS['campos_insertados']['id'] = $_POST['descripcion'];

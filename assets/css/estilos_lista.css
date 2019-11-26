@@ -1,0 +1,30 @@
+div.collapse.navbar-collapse > ul.navbar-nav li.nav-item a.nav-link,
+nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.d-flex.justify-content-between a.navbar-brand,
+form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight h4,
+form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li label {
+    color: white;
+}
+
+nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.d-flex.justify-content-between {
+    margin: auto auto 1rem auto;
+    width: 95% !important;
+}
+
+table.table.table-striped.table-bordered.table-hover {
+    margin: auto;
+    width: 95% !important;
+}
+
+form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul {
+    list-style: none;
+    display: table;
+}
+
+form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li {
+    display: table-row;
+}
+
+form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li * {
+    display: table-cell;
+    margin: .5em 1em .5em 1em;
+}
