@@ -84,6 +84,60 @@
         }
     }
 
+    /**
+     * Obtiene tareas según unos filtros especificados
+     *
+     * @param array $array Filtros.
+     * @return array|bool|mysqli_result Tareas que cumplen filtros, o falso si no ha ido bien.
+     * @throws Exception Error al construir objetos.
+     */
     function get_task_fitered_by(array $array) {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+        $response_data = [];
+        $where_params = [];
 
+        foreach ($array as $queryparam => $value) {
+            if ($value === '-1') {
+                continue;
+            } else if ($queryparam === 'fecha_creacion' || $queryparam === 'fecha_realizacion') {
+                if (isset($array['fechaRadioOptions'])) {
+                    $date_comparison_op = get_operando_comparacion_fecha($array['fechaRadioOptions']);
+                } else {
+                    $date_comparison_op = '=';
+                }
+                $where_params[] = 'tsk_'.$queryparam.' '.$date_comparison_op.' '.DateTime::createFromFormat('d-m-Y', $value)->format('Y-m-d');
+            } else
+                $where_params[] = 'tsk_'.$queryparam.' = '.$conexion->real_escape_string($value);
+        }
+
+        $sql = "SELECT tsk_id FROM pryt1_tarea WHERE ".implode(' AND ', $where_params);
+
+        $consulta = $conexion->query($sql);
+
+        if (!$consulta) {
+            return $consulta;
+        } else {
+            while ($fila = $consulta->fetch_assoc()) {
+                $response_data[] = new Tarea(['id' => $fila['tsk_id']]);
+            }
+            return $response_data;
+        }
+    }
+
+    function get_operando_comparacion_fecha($param) {
+        $op = '';
+
+        switch ($param) {
+            case 'antesde':
+                $op = '<';
+                break;
+            case 'despuesde':
+                $op = '>';
+                break;
+            case 'fechaexacta':
+                $op = '=';
+                break;
+        }
+        return $op;
     }

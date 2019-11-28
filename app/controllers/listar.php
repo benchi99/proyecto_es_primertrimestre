@@ -1,13 +1,18 @@
 <?php
 // TODO: añadir bien los usuarios cuando toque por dios tengo que repasar putas sesiones y mierdas de esa hostiaAAAAAAAA
     require_once __DIR__.'/../config.php';
+    require_once __DIR__.'/../models/utils.php';
     require_once __DIR__ . '/consultas_comunes.php';
 
     $querystr = "";
 
-    if (isset($_GET['querystr'])) {
-        $querystr = $_GET['querystr'];
-        $tareas = get_tasks($_GET['querystr']);
+    if (vg('querystr')) {
+        $querystr = vg('querystr');
+        $tareas = get_tasks($querystr);
+    } else if ($_POST) {
+        $filtros_a_buscar = todos_vp();
+
+        $tareas = get_task_fitered_by($filtros_a_buscar);
     } else {
         $tareas = obtain_all_tasks();
     }
@@ -36,10 +41,10 @@
     }
 
     function get_current_page() {
-        if (!isset($_GET['page'])) {
+        if (!vg('page')) {
             return 1;
         } else {
-            return $_GET['page'];
+            return vg('page');
         }
     }
 ?>

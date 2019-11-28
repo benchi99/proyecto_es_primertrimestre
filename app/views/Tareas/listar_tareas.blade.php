@@ -32,7 +32,7 @@
 </nav>
 <div class="collapse" id="filterCollapse" style="margin: auto auto 1rem auto; width: 95%">
     <div class="card bg-primary card-body">
-        <form class="d-flex bd-highlight" method="get">
+        <form class="d-flex bd-highlight" method="post">
             <div class="p-2 flex-fill bd-highlight">
                 <h4>Por persona</h4>
                 <ul>
@@ -50,10 +50,20 @@
                 <h4>Por fecha</h4>
                 <ul>
                     <li>
+                        <select class="form-control" name="tipo_filtro_fecha_creacion" id="tipo_filtro_fecha_creacion">
+                            <option value=">">Antes de</option>
+                            <option value="=">Durante</option>
+                            <option value="<">Despues de</option>
+                        </select>
                         <label for="fecha_creacion">De creación</label>
                         <input class="form-control" type="text" name="fecha_creacion" id="fecha_creacion" placeholder="dd-mm-AAAA">
                     </li>
                     <li>
+                        <select class="form-control" name="tipo_filtro_fecha_realizacion" id="tipo_filtro_fecha_creacion">
+                            <option value=">">Antes de</option>
+                            <option value="=">Durante</option>
+                            <option value="<">Despues de</option>
+                        </select>
                         <label for="fecha_realizacion">De realización</label>
                         <input class="form-control" type="text" name="fecha_realizacion" id="fecha_realizacion" placeholder="dd-mm-AAAA">
                     </li>
@@ -78,18 +88,18 @@
                 <ul>
                     <li>
                         <label for="provincias">Provincia</label>
-                        <select class="form-control" name="provincias" id="provincias" onchange="actualizaSelectMunicipios(this.selectedIndex)"></select>
+                        <select class="form-control" name="provincia" id="provincias" onchange="actualizaSelectMunicipios(this.selectedIndex)"></select>
                     </li>
                     <li>
                         <label for="poblaciones">Población</label>
-                        <select class="form-control" name="poblaciones" id="poblaciones" disabled>
+                        <select class="form-control" name="poblacion" id="poblaciones" disabled>
                             <option value="-1" selected>Seleccione provincia</option>
                         </select>
                     </li>
 
                 </ul>
             </div>
-                        <button type="submit" class="btn btn-outline-light my-2 my-sm-0">Filtrar...</button>
+            <button type="submit" class="btn btn-outline-light my-2 my-sm-0">Filtrar...</button>
         </form>
     </div>
 </div>

@@ -32,7 +32,7 @@
 </nav>
 <div class="collapse" id="filterCollapse" style="margin: auto auto 1rem auto; width: 95%">
  <div class="card bg-primary card-body">
- <form class="d-flex bd-highlight" method="get">
+ <form class="d-flex bd-highlight" method="post">
  <div class="p-2 flex-fill bd-highlight">
  <h4>Por persona</h4>
  <ul>
@@ -78,11 +78,11 @@
  <ul>
  <li>
  <label for="provincias">Provincia</label>
- <select class="form-control" name="provincias" id="provincias" onchange="actualizaSelectMunicipios(this.selectedIndex)"></select>
+ <select class="form-control" name="provincia" id="provincias" onchange="actualizaSelectMunicipios(this.selectedIndex)"></select>
  </li>
  <li>
  <label for="poblaciones">Población</label>
- <select class="form-control" name="poblaciones" id="poblaciones" disabled>
+ <select class="form-control" name="poblacion" id="poblaciones" disabled>
  <option value="-1" selected>Seleccione provincia</option>
  </select>
  </li>
