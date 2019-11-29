@@ -65,9 +65,9 @@ class Tarea implements iDBTemplate
                 $this->provincia = $fila['tsk_provincia'];
                 $this->persona_contacto = $fila['tsk_persona_contacto'];
                 $this->estado = $fila['tsk_estado'];
-                $this->fecha_creacion = $fila['tsk_fecha_creacion'];
+                $this->fecha_creacion = DateTime::createFromFormat('Y-m-d', $fila['tsk_fecha_creacion'])->format('d-m-Y');
                 $this->persona_encargada = $fila['tsk_persona_encargada'];
-                $this->fecha_realizacion = $fila['tsk_fecha_realizacion'];
+                $this->fecha_realizacion = DateTime::createFromFormat('Y-m-d', $fila['tsk_fecha_realizacion'])->format('d-m-Y');
                 $this->anotacion_anterior = $fila['tsk_anotacion_anterior'];
                 $this->anotacion_posterior = $fila['tsk_anotacion_posterior'];
             }
