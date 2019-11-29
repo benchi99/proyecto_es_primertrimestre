@@ -46,42 +46,28 @@
                     </li>
                 </ul>
             </div>
-            <div class="p-2 flex-fill bd-highlight">
+            <div class="p-2 flex-fill bd-highlight" style="width: 30%">
                 <h4>Por fecha</h4>
                 <ul>
                     <li>
+                        <label for="fecha_creacion">De creación</label>
                         <select class="form-control" name="tipo_filtro_fecha_creacion" id="tipo_filtro_fecha_creacion">
                             <option value=">">Antes de</option>
-                            <option value="=">Durante</option>
+                            <option value="=" selected>Durante</option>
                             <option value="<">Despues de</option>
                         </select>
-                        <label for="fecha_creacion">De creación</label>
                         <input class="form-control" type="text" name="fecha_creacion" id="fecha_creacion" placeholder="dd-mm-AAAA">
                     </li>
                     <li>
+                        <label for="fecha_realizacion">De realización</label>
                         <select class="form-control" name="tipo_filtro_fecha_realizacion" id="tipo_filtro_fecha_creacion">
                             <option value=">">Antes de</option>
-                            <option value="=">Durante</option>
+                            <option value="=" selected>Durante</option>
                             <option value="<">Despues de</option>
                         </select>
-                        <label for="fecha_realizacion">De realización</label>
                         <input class="form-control" type="text" name="fecha_realizacion" id="fecha_realizacion" placeholder="dd-mm-AAAA">
                     </li>
                 </ul>
-                <div class="d-flex justify-content-center">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="fechaRadioOptions" id="fechaRadio1" value="antesde">
-                            <label class="form-check-label" for="fechaRadio1">Antes de</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="fechaRadioOptions" id="fechaRadio2" value="fechaexacta">
-                            <label class="form-check-label" for="fechaRadio2">En la fecha</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="fechaRadioOptions" id="fechaRadio3" value="despuesde">
-                            <label class="form-check-label" for="fechaRadio3">Después de</label>
-                        </div>
-                </div>
             </div>
             <div class="p-2 flex-fill bd-highlight">
                 <h4>Por ubicación</h4>

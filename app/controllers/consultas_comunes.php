@@ -98,15 +98,19 @@
         $where_params = [];
 
         foreach ($array as $queryparam => $value) {
-            if ($value === '-1') {
+            if ($value === '-1' || $queryparam === 'tipo_filtro_fecha_creacion' || $queryparam === 'tipo_filtro_fecha_realizacion') {
                 continue;
             } else if ($queryparam === 'fecha_creacion' || $queryparam === 'fecha_realizacion') {
-                if (isset($array['fechaRadioOptions'])) {
-                    $date_comparison_op = get_operando_comparacion_fecha($array['fechaRadioOptions']);
-                } else {
-                    $date_comparison_op = '=';
+                $date_comparison_op = '=';
+                switch ($queryparam) {
+                    case "fecha_creacion":
+                        $date_comparison_op = $array['tipo_filtro_fecha_creacion'];
+                        break;
+                    case " fecha_realizacion":
+                        $date_comparison_op = $array['tipo_filtro_fecha_realizacion'];
+                        break;
                 }
-                $where_params[] = 'tsk_'.$queryparam.' '.$date_comparison_op.' '.DateTime::createFromFormat('d-m-Y', $value)->format('Y-m-d');
+                $where_params[] = 'tsk_'.$queryparam.' '.$date_comparison_op.' "'.DateTime::createFromFormat('d-m-Y', $value)->format('Y-m-d').'"';
             } else
                 $where_params[] = 'tsk_'.$queryparam.' = '.$conexion->real_escape_string($value);
         }
@@ -123,21 +127,4 @@
             }
             return $response_data;
         }
-    }
-
-    function get_operando_comparacion_fecha($param) {
-        $op = '';
-
-        switch ($param) {
-            case 'antesde':
-                $op = '<';
-                break;
-            case 'despuesde':
-                $op = '>';
-                break;
-            case 'fechaexacta':
-                $op = '=';
-                break;
-        }
-        return $op;
     }
