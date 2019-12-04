@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href='@relative("app/controllers/f_tarea.php?action=1")'><i class="fas fa-plus"></i>
+                <a class="nav-link" href='@relative("app/?a=1&action=1")'><i class="fas fa-plus"></i>
                     Añadir nueva tarea...</a>
             </li>
             <li class="nav-item">
@@ -139,11 +139,11 @@
                     <td>{{ $tarea->anotacion_anterior }}</td>
                     <td>{{ $tarea->anotacion_posterior }}</td>
                     <td>
-                        <a href='@relative("app/controllers/f_tarea.php?action=2&task_id={$tarea->id}")'>
+                        <a href='@relative("app/?a=1&action=2&task_id={$tarea->id}")'>
                             <i class="fas fa-edit"></i> Editar</a><br>
-                        <a href='@relative("app/controllers/f_tarea.php?action=4&task_id={$tarea->id}")'>
+                        <a href='@relative("app/?a=1&action=4&task_id={$tarea->id}")'>
                             <i class="fas fa-check"></i> Completar</a><br>
-                        <a href='@relative("app/controllers/f_tarea.php?action=3&task_id={$tarea->id}")'>
+                        <a href='@relative("app/?a=1&action=3&task_id={$tarea->id}")'>
                             <i class="fas fa-eraser"></i> Eliminar</a>
                     </td>
                 </tr>
@@ -172,10 +172,10 @@
                 </li>
             @else
                 @if($querystr)
-                    <li class="page-item"><a href="?querystr={{$querystr}}&page={{$page}}"
+                    <li class="page-item"><a href="?&querystr={{$querystr}}&page={{$page}}"
                                              class="page-link">{{$page}}</a></li>
                 @else
-                    <li class="page-item"><a href="?page={{$page}}" class="page-link">{{$page}}</a></li>
+                    <li class="page-item"><a href="?&page={{$page}}" class="page-link">{{$page}}</a></li>
                 @endif
             @endif
         @endfor

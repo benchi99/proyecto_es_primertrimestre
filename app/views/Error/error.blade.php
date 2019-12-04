@@ -1,4 +1,4 @@
-@include('General.cabecera)
+@include('General.cabecera')
 
 <h1 class="text-danger">¡Error!</h1>
 

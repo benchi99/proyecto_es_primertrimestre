@@ -18,5 +18,3 @@ $blade = new BladeOne(__DIR__.'\views',
 
 // TODO: Cambiar a URL del servidor a desplegar.
 $blade->setBaseUrl("http://localhost/ES/proyecto_es_primertrimestre/");
-// Escribir esto a la hora de invocar una vista.
-// echo $blade->run("Test.hello", []);
