@@ -1,0 +1,11 @@
+<?php echo $this->runChild('General.cabecera'); ?>
+
+<h1 class="text-danger">¡Error!</h1>
+
+<div class="alert alert-danger">
+ <p>¡Se ha producido un error al procesar esa petición!</p>
+ <p>A continuación, viene descrito el error producido:</p>
+ <p><?php echo static::e($error); ?></p>
+</div>
+
+<?php echo $this->runChild('General.pie'); ?>

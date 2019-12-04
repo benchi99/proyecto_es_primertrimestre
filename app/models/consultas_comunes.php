@@ -1,7 +1,7 @@
 <?php
-    require_once __DIR__ .'/../models/bd_gest.php';
-    require_once __DIR__.'/../models/Tarea.php';
-    require_once __DIR__.'/../models/Usuario.php';
+    require_once __DIR__ . '/bd_gest.php';
+    require_once __DIR__ . '/Tarea.php';
+    require_once __DIR__ . '/Usuario.php';
 
     /**
      * Consulta la base de datos para obtener todas las tareas existentes.
