@@ -75,7 +75,7 @@ if (!$_GET) {
 
                         // Enviar a ventana de éxito.
                     } else {    // Los datos insertados no son correctos.
-                        obtain_set_values();
+                        $campos_insertados = todos_vp();
                         try {
                             echo $blade->run('Tareas.f_tareas', [
                                 "action" => 1,
@@ -147,7 +147,7 @@ if (!$_GET) {
                             }
 
                         } else { // Los datos a editar NO son válidos.
-                            obtain_set_values();
+                            $campos_insertados = todos_vp();
                             try {
                                 echo $blade->run('Tareas.f_tareas', [
                                     "action" => 2,
@@ -286,57 +286,6 @@ function valida_datos() {
     }
 
     return $estado;
-}
-
-/**
- * Obtiene todos los valores de $_POST del formulario de tareas y los guarda en un array.
- */
-function obtain_set_values() {
-    // TODO: VALORPOST/VALORGET
-
-    if (isset($_POST['id'])) {
-        $GLOBALS['campos_insertados']['id'] = $_POST['descripcion'];
-    }
-
-    if (isset($_POST['descripcion'])) {
-        $GLOBALS['campos_insertados']['descripcion'] = $_POST['descripcion'];
-    }
-
-    if (isset($_POST['poblacion'])) {
-        $GLOBALS['campos_insertados']['poblacion'] = $_POST['poblacion'];
-    }
-
-    if (isset($_POST['cp'])) {
-        $GLOBALS['campos_insertados']['cp'] = $_POST['cp'];
-    }
-
-    if (isset($_POST['persona_contacto'])) {
-        $GLOBALS['campos_insertados']['persona_contacto'] = $_POST['persona_contacto'];
-    }
-
-    if (isset($_POST['estado'])) {
-        $GLOBALS['campos_insertados']['estado'] = $_POST['estado'];
-    }
-
-    if (isset($_POST['fecha_creacion'])) {
-        $GLOBALS['campos_insertados']['fecha_creacion'] = $_POST['fecha_creacion'];
-    }
-
-    if (isset($_POST['persona_encargada'])) {
-        $GLOBALS['campos_insertados']['persona_encargada'] = $_POST['persona_encargada'];
-    }
-
-    if (isset($_POST['fecha_realizacion'])) {
-        $GLOBALS['campos_insertados']['fecha_realizacion'] = $_POST['fecha_realizacion'];
-    }
-
-    if (isset($_POST['anotacion_anterior'])) {
-        $GLOBALS['campos_insertados']['anotacion_anterior'] = $_POST['anotacion_anterior'];
-    }
-
-    if (isset($_POST['anotacion_posterior'])) {
-        $GLOBALS['campos_insertados']['anotacion_posterior'] = $_POST['anotacion_posterior'];
-    }
 }
 
 function valida_fecha($fecha, $formato = 'd-m-Y') {

@@ -19,15 +19,14 @@ $mapa_vistas = [
 if (vg(ACTION)) {
     $vista_a_cargar = vg(ACTION);
     if (isset($mapa_vistas[$vista_a_cargar]) && file_exists(__DIR__.'/../controllers/'.$mapa_vistas[$vista_a_cargar].'.php')) {
-        include __DIR__.'/'.$mapa_vistas[$vista_a_cargar].'.php';
+        include __DIR__.'/../controllers/'.$mapa_vistas[$vista_a_cargar].'.php';
     } else {
-        // TODO: jaja no funciona por alguna razón arreglar en algun momento 😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌😂👌
         try {
-            $blade->run('Error.error', ['error' => 'La página solicitada no existe.']);
+            echo $blade->run('Error.error', ['error' => 'La página solicitada no existe.']);
         } catch (Exception $e) {
             echo $e->getMessage();
         }
     }
 } else if (!vg(ACTION)) {
-    include __DIR__.'/'.$mapa_vistas[L].'.php';
+    include __DIR__.'/../controllers/'.$mapa_vistas[L].'.php';
 }
