@@ -1,6 +1,6 @@
 <?php
-require_once __DIR__ .'/../models/bd_gest.php';
-require_once __DIR__.'/../config.php';
+require_once __DIR__ . 'bd_gest.php';
+require_once __DIR__ . '/../config.php';
 
 if (!$_GET) {
     echo "No viene nada por GET!";
