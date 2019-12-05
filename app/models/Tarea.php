@@ -56,7 +56,7 @@ class Tarea implements iDBTemplate
         $consulta = $conexion->query("SELECT * FROM pryt1_tarea WHERE tsk_id = '" . $id . "'");
 
         if (!$consulta) {
-            echo "Error lol";
+            throw new Exception("Hubo un error al construir tarea desde base de datos: ".$conexion->error);
         } else {
             while ($fila = $consulta->fetch_assoc()) {
                 $this->descripcion = $fila['tsk_descripcion'];
@@ -91,7 +91,6 @@ class Tarea implements iDBTemplate
 
     public function commit_to_database()
     {
-        $result_package = [];
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
 

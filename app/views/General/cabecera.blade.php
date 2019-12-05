@@ -26,3 +26,9 @@
     <title>Garden</title>
 </head>
 <body>
+
+<nav class="navbar navbar-dark bg-dark">
+    @if($sesion_iniciada)
+    <span class="navbar-text">Hola, {{ $usuario }}. <a href="#" class="nav-link">Cerrar sesión</a> </span>
+    @endif
+</nav>

@@ -8,11 +8,13 @@ define('ACTION', 'a');
 define('L', '0');
 define('FT', '1');
 define('FU', '2');
+define('LG', '3');
 
 $mapa_vistas = [
     L => 'listar',
     FT => 'f_tarea',
-    FU => 'f_usuario'
+    FU => 'f_usuario',
+    LG => 'login'
     // ...
 ];
 
