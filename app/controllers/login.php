@@ -3,23 +3,27 @@
 require_once __DIR__.'/../models/utils.php';
 require_once __DIR__.'/../models/consultas_comunes.php';
 
-$rol_requerido = 0;
+$errores = [
+    'no_sesion_iniciada' => null,
+    'nombreusu' => null,
+    'pass' => null
+];
 
-include __DIR__.'/validacion_usuarios.php';
+$campos_insertados = [
+    'nombreusu' => null,
+    'pass' => null
+];
 
-$errores = [];
-$campos_insertados = [];
-
-if($_SESSION) {
+if (isset($_SESSION)) {
     // Ya hay una sesión activa.
-  header('Location: '.__DIR__.'/../index.php');
+  header('Location:index.php');
 } else if (!$_POST) {
     // no se ha insertado nada
     echo $blade->run('General.login_form', [
         'errores' => $errores,
         'campos_insertados' => $campos_insertados,
-        'sesion_iniciada' => $sesion_iniciada,
-        'usuario' => $nombre_usuario
+        'sesion_iniciada' => false,
+        'usuario' => null
     ]);
 } else {
     // se han insertado datos
@@ -43,7 +47,9 @@ if($_SESSION) {
             $campos_insertados = todos_vp();
             echo $blade->run('General.login_form', [
                 'errores' => $errores,
-                'campos_insertados' => $campos_insertados
+                'campos_insertados' => $campos_insertados,
+                'sesion_iniciada' => false,
+                'usuario' => null
             ]);
         }
     }
@@ -53,5 +59,5 @@ function iniciar_sesion($nombre_usuario, $rol) {
     session_start();
     $_SESSION['usuario'] = $nombre_usuario;
     $_SESSION['rol'] = $rol;
-    header("Location: ".__DIR__."/../index.php");
+    header("Location:index.php");
 }

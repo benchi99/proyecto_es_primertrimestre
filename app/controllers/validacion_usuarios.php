@@ -5,10 +5,21 @@ session_start();
 $sesion_iniciada = false;
 $nombre_usuario = null;
 
-if (!$_SESSION['usuario']) {
-    header('Location: '.__DIR__.'/../index.php?a=3');
+if (!$_SESSION) {
+    header('Location:index.php?a=6');
 } else if ($_SESSION['rol'] < $rol_requerido) {
-    echo $blade->run('Error.error', ['error' => 'Acceso denegado. Se requiere de más permisos para acceder a esta página.']);
+    try {
+        $sesion_iniciada = true;
+        $nombre_usuario = $_SESSION['usuario'];
+        echo $blade->run('Error.error', [
+            'error' => 'Acceso denegado. Se requiere de más permisos para acceder a esta página.',
+            'usuario' => $nombre_usuario,
+            'sesion_iniciada' => $sesion_iniciada
+        ]);
+        exit;
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
 } else {
     $sesion_iniciada = true;
     $nombre_usuario = $_SESSION['usuario'];

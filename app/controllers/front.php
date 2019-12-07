@@ -6,15 +6,23 @@ define('ACTION', 'a');
 
 // constantes que definen que cargar
 define('L', '0');
-define('FT', '1');
-define('FU', '2');
-define('LG', '3');
+define('IT', '1');
+define('ET', '2');
+define('DT', '3');
+define('CT', '4');
+define('FU', '5');
+define('LG', '6');
+define('CS', '7');
 
 $mapa_vistas = [
     L => 'listar',
-    FT => 'f_tarea',
+    IT => 'insertar_tarea',
+    ET => 'editar_tarea',
+    DT => 'eliminar_tarea',
+    CT => 'completar_tarea',
     FU => 'f_usuario',
-    LG => 'login'
+    LG => 'login',
+    CS => 'cerrar_sesion',
     // ...
 ];
 
@@ -24,7 +32,11 @@ if (vg(ACTION)) {
         include __DIR__.'/../controllers/'.$mapa_vistas[$vista_a_cargar].'.php';
     } else {
         try {
-            echo $blade->run('Error.error', ['error' => 'La página solicitada no existe.']);
+            echo $blade->run('Error.error', [
+                'error' => 'La página solicitada no existe.',
+                'sesion_iniciada' => isset($_SESSION) ? true : false,
+                'usuario' => isset($_SESSION['usuario']) ? $_SESSION['usuario'] : null,
+            ]);
         } catch (Exception $e) {
             echo $e->getMessage();
         }

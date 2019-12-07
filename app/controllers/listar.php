@@ -1,8 +1,11 @@
 <?php
-// TODO: añadir bien los usuarios cuando toque por dios tengo que repasar putas sesiones y mierdas de esa hostiaAAAAAAAA
     require_once __DIR__.'/../config.php';
     require_once __DIR__.'/../models/utils.php';
     require_once __DIR__.'/../models/consultas_comunes.php';
+
+    $rol_requerido = 0;
+
+    include __DIR__.'/validacion_usuarios.php';
 
     $querystr = "";
 
@@ -34,8 +37,10 @@
             "num_tareas" => $num_tareas,
             "total_pgs" => $total_pgs,
             "pagina_actual" => $pagina_actual,
-            "querystr" => $querystr
-            ]);
+            "querystr" => $querystr,
+            'sesion_iniciada' => $sesion_iniciada,
+            'usuario' => $nombre_usuario
+        ]);
     } catch (Exception $e) {
         echo $e->getMessage();
     }

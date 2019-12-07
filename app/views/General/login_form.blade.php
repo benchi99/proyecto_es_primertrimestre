@@ -1,43 +1,34 @@
 @include('General.cabecera')
 
-<h1>Iniciar sesión</h1>
 
+<div class="d-flex justify-content-center">
+    <h1 class="m-3 p-3 border-right">Inicio de sesión</h1>
 @if($errores['no_sesion_iniciada'])
     <div class="alert alert-danger" role="alert">
         {{ $errores['no_sesion_iniciada'] }}
     </div>
 @endif
-
-<form action="" method="post">
-    <table>
-        <tr>
-            <td><label for="nombreusu"></label></td>
-            <td><input type="text" name="nombreusu" id="nombreusu" value="{{ $campos_insertados['nombreusu'] or '' }}"></td>
-            @if($errores['nombreusu'])
-                <td>
-                    <div class="alert alert-danger" role="alert">
+    <form action="" method="post" class="m-3">
+        <div class="form-group">
+                <label for="nombreusu">Nombre de usuario</label>
+                <input class="form-control" type="text" name="nombreusu" id="nombreusu" value="{{ $campos_insertados['nombreusu'] or '' }}">
+                @if($errores['nombreusu'])
+                    <div class="">
                         {{ $errores['nombreusu'] }}
                     </div>
-                </td>
-            @endif
-        </tr>
-        <tr>
-            <td><label for="pass"></label></td>
-            <td><input type="password" name="pass" id="pass" value="{{ $campos_insertados['pass'] or '' }}"></td>
+                @endif
+        </div>
+        <div class="form-group">
+            <label for="pass">Contraseña</label>
+            <input class="form-control" type="password" name="pass" id="pass" value="{{ $campos_insertados['pass'] or '' }}">
             @if($errores['pass'])
-                <td>
-                    <div class="alert alert-danger" role="alert">
-                        {{ $errores['pass'] }}
-                    </div>
-                </td>
+                <div class="invalid-feedback">
+                    {{ $errores['pass'] }}
+                </div>
             @endif
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="submit" value="Enviar">
-            </td>
-        </tr>
-    </table>
-</form>
+        </div>
+        <input type="submit" value="Iniciar sesión" class="btn btn-primary">
+    </form>
+</div>
 
 @include('General.pie')

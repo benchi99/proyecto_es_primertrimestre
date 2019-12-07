@@ -1,0 +1,11 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-dark.d-flex.justify-content-between {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    box-shadow: 0 10px 10px #888888;
+}
+
+div.d-flex.justify-content-center.m-3#logo_img {
+    padding-top: 56px;
+}

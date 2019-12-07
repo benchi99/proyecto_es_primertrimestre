@@ -15,7 +15,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href='@relative("app/?a=1&action=1")'><i class="fas fa-plus"></i>
+                <a class="nav-link" href='@relative("app/?a=1")'><i class="fas fa-plus"></i>
                     Añadir nueva tarea...</a>
             </li>
             <li class="nav-item">
@@ -139,11 +139,11 @@
                     <td>{{ $tarea->anotacion_anterior }}</td>
                     <td>{{ $tarea->anotacion_posterior }}</td>
                     <td>
-                        <a href='@relative("app/?a=1&action=2&task_id={$tarea->id}")'>
+                        <a href='@relative("app/?a=2&task_id={$tarea->id}")'>
                             <i class="fas fa-edit"></i> Editar</a><br>
-                        <a href='@relative("app/?a=1&action=4&task_id={$tarea->id}")'>
+                        <a href='@relative("app/?a=4&task_id={$tarea->id}")'>
                             <i class="fas fa-check"></i> Completar</a><br>
-                        <a href='@relative("app/?a=1&action=3&task_id={$tarea->id}")'>
+                        <a href='@relative("app/?a=3&task_id={$tarea->id}")'>
                             <i class="fas fa-eraser"></i> Eliminar</a>
                     </td>
                 </tr>
