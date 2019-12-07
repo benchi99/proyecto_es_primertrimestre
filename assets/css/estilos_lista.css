@@ -31,3 +31,7 @@ form.d-flex.bd-highlight div.p-2.flex-fill.bd-highlight ul li input {
     display: table-cell;
     margin: .5em 1em .5em 1em;
 }
+
+nav[aria-label=pagination] {
+    padding-bottom: 56px;
+}

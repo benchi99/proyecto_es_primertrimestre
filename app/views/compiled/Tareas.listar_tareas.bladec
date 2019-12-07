@@ -14,10 +14,12 @@
  </button>
  <div class="collapse navbar-collapse" id="navbarNav">
  <ul class="navbar-nav">
+ <?php if($rol_actual === 1): ?>
  <li class="nav-item">
  <a class="nav-link" href='<?php  echo $this->relative("app/?a=1");?>'><i class="fas fa-plus"></i>
  Añadir nueva tarea...</a>
  </li>
+ <?php endif; ?>
  <li class="nav-item">
  <a class="nav-link" data-toggle="collapse" href="#filterCollapse" role="button" aria-expanded="false"
  aria-controls="collapseExample"><i class="fas fa-filter"></i> Filtrar</a>
@@ -141,12 +143,14 @@
  <td><?php echo static::e($tarea->anotacion_anterior); ?></td>
  <td><?php echo static::e($tarea->anotacion_posterior); ?></td>
  <td>
+ <?php if($rol_actual === 1): ?>
  <a href='<?php  echo $this->relative("app/?a=2&task_id={$tarea->id}");?>'>
  <i class="fas fa-edit"></i> Editar</a><br>
- <a href='<?php  echo $this->relative("app/?a=4&task_id={$tarea->id}");?>'>
- <i class="fas fa-check"></i> Completar</a><br>
  <a href='<?php  echo $this->relative("app/?a=3&task_id={$tarea->id}");?>'>
- <i class="fas fa-eraser"></i> Eliminar</a>
+ <i class="fas fa-eraser"></i> Eliminar</a><br>
+ <?php endif; ?>
+ <a href='<?php  echo $this->relative("app/?a=4&task_id={$tarea->id}");?>'>
+ <i class="fas fa-check"></i> Completar</a>
  </td>
  </tr>
  <?php endif; ?>

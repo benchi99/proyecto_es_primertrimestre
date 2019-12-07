@@ -135,8 +135,8 @@
 
         $consulta = $conexion->query("SELECT usr_id FROM pryt1_usuarios WHERE usr_nombreusu = '".$username."'");
 
-        if (!$consulta) {
-            return $consulta;
+        if (!$consulta->num_rows) {
+            return false;
         } else {
             $fila = $consulta->fetch_assoc();
 

@@ -10,21 +10,25 @@
 @endif
     <form action="" method="post" class="m-3">
         <div class="form-group">
-                <label for="nombreusu">Nombre de usuario</label>
+            <label for="nombreusu">Nombre de usuario</label>
+            @if($errores['nombreusu'])
+            <input class="form-control is-invalid" type="text" name="nombreusu" id="nombreusu" value="{{ $campos_insertados['nombreusu'] or '' }}">
+                <div class="invalid-feedback">
+                    {{ $errores['nombreusu'] }}
+                </div>
+            @else
                 <input class="form-control" type="text" name="nombreusu" id="nombreusu" value="{{ $campos_insertados['nombreusu'] or '' }}">
-                @if($errores['nombreusu'])
-                    <div class="">
-                        {{ $errores['nombreusu'] }}
-                    </div>
-                @endif
+            @endif
         </div>
         <div class="form-group">
             <label for="pass">Contraseña</label>
-            <input class="form-control" type="password" name="pass" id="pass" value="{{ $campos_insertados['pass'] or '' }}">
             @if($errores['pass'])
+                <input class="form-control is-invalid" type="password" name="pass" id="pass" value="{{ $campos_insertados['pass'] or '' }}">
                 <div class="invalid-feedback">
                     {{ $errores['pass'] }}
                 </div>
+            @else
+                <input class="form-control" type="password" name="pass" id="pass" value="{{ $campos_insertados['pass'] or '' }}">
             @endif
         </div>
         <input type="submit" value="Iniciar sesión" class="btn btn-primary">

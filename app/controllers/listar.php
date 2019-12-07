@@ -39,7 +39,8 @@
             "pagina_actual" => $pagina_actual,
             "querystr" => $querystr,
             'sesion_iniciada' => $sesion_iniciada,
-            'usuario' => $nombre_usuario
+            'usuario' => $nombre_usuario,
+            'rol_actual' => intval($_SESSION['rol'])
         ]);
     } catch (Exception $e) {
         echo $e->getMessage();
