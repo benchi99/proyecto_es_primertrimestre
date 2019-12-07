@@ -128,3 +128,18 @@
             return $response_data;
         }
     }
+
+    function obtain_user_by_username($username) {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+
+        $consulta = $conexion->query("SELECT usr_id FROM pryt1_usuarios WHERE usr_nombreusu = '".$username."'");
+
+        if (!$consulta->num_rows) {
+            return false;
+        } else {
+            $fila = $consulta->fetch_assoc();
+
+            return new Usuario(["id" => $fila['usr_id']]);
+        }
+    }
