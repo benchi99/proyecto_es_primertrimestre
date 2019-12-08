@@ -1,5 +1,5 @@
 <?php
-$rol_requerido = 0;
+$rol_requerido = ROL_OPERARIO;
 
 include __DIR__.'/validacion_usuarios.php';
 

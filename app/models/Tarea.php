@@ -31,7 +31,7 @@ class Tarea implements iDBTemplate
     private function __construye_todos_params($data)
     {
         if (isset($data['id'])) {
-            $this->id = $data['id'];
+            $this->id = intval($data['id']);
         }
         $this->descripcion = $data['descripcion'];
         $this->poblacion = $data['poblacion'];
@@ -48,7 +48,7 @@ class Tarea implements iDBTemplate
 
     private function __construye_desde_id($id)
     {
-        $this->id = $id;
+        $this->id = intval($id);
 
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();

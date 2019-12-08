@@ -3,7 +3,7 @@
     require_once __DIR__.'/../models/utils.php';
     require_once __DIR__.'/../models/consultas_comunes.php';
 
-    $rol_requerido = ROL_OPERARIO;
+    $rol_requerido = ROL_ADMIN;
 
     include __DIR__.'/validacion_usuarios.php';
 
@@ -11,30 +11,24 @@
 
     if (vg('querystr')) {
         $querystr = vg('querystr');
-        $tareas = get_tasks($querystr);
-    } else if ($_POST) {
-        $filtros_a_buscar = todos_vp();
-
-        $tareas = get_task_fitered_by($filtros_a_buscar);
+        $usuarios = get_users($querystr);
     } else {
-        $tareas = obtain_all_tasks();
+        $usuarios = obtain_all_users();
     }
-    $usuarios = obtain_all_users();
 
     $limite = 4;
-    $num_tareas = count($tareas);
-    $total_pgs = intval(ceil($num_tareas/$limite));
+    $num_usuarios = count($usuarios);
+    $total_pgs = intval(ceil($num_usuarios/$limite));
     $pagina_actual = get_current_page();
 
     $limite_comienzo = ($pagina_actual-1) * $limite;
 
     try {
-        echo $blade->run("Tareas.listar_tareas", [
-            "tareas" => $tareas,
+        echo $blade->run("Usuarios.listar_usuarios", [
             "usuarios" => $usuarios,
             "limite" => $limite,
             "limite_comienzo" => $limite_comienzo,
-            "num_tareas" => $num_tareas,
+            "num_usuarios" => $num_usuarios,
             "total_pgs" => $total_pgs,
             "pagina_actual" => $pagina_actual,
             "querystr" => $querystr,

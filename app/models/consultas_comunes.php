@@ -85,6 +85,37 @@
     }
 
     /**
+     * Obtiene usuarios según un parámetro de búsqueda (usado en la barra de búsqueda)
+     * @param $query_string string Parametro de búsqueda
+     * @return array|bool|mysqli_result Resultado de consulta
+     * @throws Exception Error al construir objetos
+     */
+    function get_users($query_string) {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+        $param = $conexion->real_escape_string($query_string);  // Inyéctame esta quieres
+        $response_data = [];
+
+        $data = $conexion->query("SELECT usr_id FROM pryt1_usuarios WHERE usr_nombreusu like '%".$param."%' or
+                                usr_nombre like '%".$param."%' or
+                                usr_apellidos like '%".$param."%' or
+                                usr_tlf like '%".$param."%' or
+                                usr_email like '%".$param."%' or
+                                usr_direccion like '%".$param."%' or
+                                usr_rol like '%".$param."%'");
+
+        if (!$data) {
+            return $data;
+        } else {
+            while ($fila = $data->fetch_assoc()) {
+                array_push($response_data, new Usuario(['id' => $fila['usr_id']]));
+            }
+            return $response_data;
+        }
+
+    }
+
+    /**
      * Obtiene tareas según unos filtros especificados
      *
      * @param array $array Filtros.

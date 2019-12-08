@@ -1,6 +1,6 @@
 <?php
 
-    $rol_requerido = 1;
+    $rol_requerido = ROL_ADMIN;
 
     include __DIR__.'/validacion_usuarios.php';
 
@@ -14,7 +14,8 @@
                 "errores" => $errores,
                 "valores_antiguos" => $campos_insertados,
                 'usuario' => $nombre_usuario,
-                'sesion_iniciada' => $sesion_iniciada
+                'sesion_iniciada' => $sesion_iniciada,
+                'rol_actual' => intval($_SESSION['rol'])
             ]);
         } catch (Exception $e) {
             echo $e->getMessage();

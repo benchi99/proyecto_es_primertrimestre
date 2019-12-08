@@ -13,6 +13,7 @@ define('CT', '4');
 define('FU', '5');
 define('LG', '6');
 define('CS', '7');
+define('LU', '8');
 
 $mapa_controladores = [
     LT => 'listar_tarea',
@@ -23,6 +24,7 @@ $mapa_controladores = [
     FU => 'f_usuario',
     LG => 'login',
     CS => 'cerrar_sesion',
+    LU => 'listar_usuario'
     // ...
 ];
 
