@@ -51,7 +51,7 @@ if (isset($_GET['task_id']) || isset($_POST['id'])) {
                 $estado = $tarea->commit_to_database();
 
                 if ($estado) {
-                    header("Location:listar.php?status=2");
+                    header("Location:index.php");
                 } else {
                     try {
                         echo $blade->run('Error.error', [

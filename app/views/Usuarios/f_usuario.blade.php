@@ -2,7 +2,7 @@
 
 <h2>Tarea</h2>
 
-<form action='@relative("app/index.php?a={$action}")' method="POST">
+<form action='@relative("app/controllers/f_tarea.php?action={$action}")' method="POST">
     @if($action===2)
         <input type="hidden" name="id" id="id" value="{{ $tarea-> id }}">
     @endIf

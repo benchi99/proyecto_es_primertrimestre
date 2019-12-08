@@ -1,6 +1,6 @@
 $(document).ready(() => {
     $.ajax({
-        url: URL + 'app/controllers/consultas_front.php?querytype=all',
+        url: URL + 'app/models/consultas_front.php?querytype=all',
         method: "GET",
         dataType: "json",
         complete: (response) => {

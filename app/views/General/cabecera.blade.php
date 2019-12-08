@@ -54,3 +54,5 @@
 <div class="d-flex justify-content-center m-3" id="logo_img">
     <img src='@relative("assets/img/logo.png")' alt="logo_pacos_garden" height="250">
 </div>
+
+<div class="container-fluid">

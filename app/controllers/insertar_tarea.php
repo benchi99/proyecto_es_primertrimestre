@@ -38,7 +38,7 @@
                 ]);
 
                 if ($tarea_nueva->commit_to_database()) {
-                    header("Location: listar.php?status=1");
+                    header("Location: index.php");
                 } else {
                     echo $blade->run('Error.error', [
                         'error' => 'La tarea no se ha insertado correctamente. Contacte con el administrador.',

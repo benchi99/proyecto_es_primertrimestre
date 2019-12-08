@@ -22,7 +22,7 @@ if (isset($_GET['task_id'])) {
             $e->getMessage();
         }
     } else {
-        header("Location:listar.php?status=4");
+        header("Location:index.php");
     }
 } else {
     try {

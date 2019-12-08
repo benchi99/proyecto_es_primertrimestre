@@ -15,7 +15,7 @@ if (isset($_GET['task_id'])) {
     }
     if ($tarea->id) {
         $tarea->delete();
-        header("Location: listar.php?status=3");
+        header("Location: index.php");
     } else {
         try {
             echo $blade->run('Error.error', [
