@@ -1,5 +1,5 @@
 <?php
-$rol_requerido = ROL_OPERARIO;
+$rol_requerido = ROL_ADMIN;
 
 include __DIR__.'/validacion_usuarios.php';
 
@@ -21,7 +21,8 @@ if (isset($_GET['task_id'])) {
             echo $blade->run('Error.error', [
                 'error' => 'Error al eliminar tarea: Esta tarea no existe.',
                 'usuario' => $nombre_usuario,
-                'sesion_iniciada' => $sesion_iniciada
+                'sesion_iniciada' => $sesion_iniciada,
+                'rol_actual' => intval($_SESSION['rol'])
             ]);
         } catch (Exception $e) {
             $e->getMessage();
@@ -32,7 +33,8 @@ if (isset($_GET['task_id'])) {
         echo $blade->run('Error.error', [
             'error' => 'Error al obtener tarea: No se ha especificado ID.',
             'usuario' => $nombre_usuario,
-            'sesion_iniciada' => $sesion_iniciada
+            'sesion_iniciada' => $sesion_iniciada,
+            'rol_actual' => intval($_SESSION['rol'])
         ]);
     } catch (Exception $e) {
         $e->getMessage();

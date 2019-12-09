@@ -44,15 +44,13 @@
                     echo $blade->run('Error.error', [
                         'error' => 'La tarea no se ha insertado correctamente. Contacte con el administrador.',
                         'usuario' => $nombre_usuario,
-                        'sesion_iniciada' => $sesion_iniciada
+                        'sesion_iniciada' => $sesion_iniciada,
+                        'rol_actual' => intval($_SESSION['rol'])
                     ]);
                 }
-
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
-
-            // Enviar a ventana de éxito.
         } else {    // Los datos insertados no son correctos.
             $campos_insertados = todos_vp();
             try {
@@ -62,7 +60,8 @@
                     "errores" => $errores,
                     "valores_antiguos" => $campos_insertados,
                     'usuario' => $nombre_usuario,
-                    'sesion_iniciada' => $sesion_iniciada
+                    'sesion_iniciada' => $sesion_iniciada,
+                    'rol_actual' => intval($_SESSION['rol'])
                 ]);
             } catch (Exception $e) {
                 echo $e->getMessage();
