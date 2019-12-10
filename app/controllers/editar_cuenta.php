@@ -52,6 +52,7 @@ if (!$_POST) {
 
     try {
         if ($usuario->commit_to_database()) {
+            $_SESSION['usuario'] = vp('nombre_usuario');
             header('Location:index.php?a=11');
         } else {
             echo $blade->run('Error.error', [
