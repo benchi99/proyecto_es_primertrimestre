@@ -1,0 +1,198 @@
+<?php echo $this->runChild('General.cabecera'); ?>
+
+<style>
+ @import url(<?php  echo $this->relative("assets/css/estilo_form.css");?>)
+</style>
+<?php /*<script src="<?php  echo $this->relative('assets/js/form_tarea.js');?>"></script>*/ ?>
+
+<div class="row d-flex justify-content-center">
+ <?php echo $this->runChild('General.lateral'); ?>
+ <div class="col-8">
+ <nav aria-label="breadcrumb">
+ <ol class="breadcrumb">
+ <li class="breadcrumb-item"><a href="<?php  echo $this->relative('app/');?>">Tareas</a></li>
+ <?php if($action === 1): ?>
+ <li class="breadcrumb-item active" aria-current="page">Crear Tarea</li>
+ <?php else: ?>
+ <li class="breadcrumb-item active" aria-current="page">Editar Tarea</li>
+ <?php endif; ?>
+ </ol>
+ </nav>
+ <form action='<?php  echo $this->relative("app/index.php?a={$action}");?>' method="POST">
+ <?php if($action===2): ?>
+ <input type="hidden" name="id" id="id" value="<?php echo static::e($tarea-> id); ?>">
+ <span id="id_poblacion" style="visibility: hidden;"><?php echo static::e($tarea->poblacion); ?></span>
+ <span id="id_provincia" style="visibility: hidden;"><?php echo static::e($tarea->provincia); ?></span>
+ <?php endif; ?>
+ <div class="form-group">
+ <label for="descripcion">Descripción</label>
+ <?php if($action===1): ?>
+ <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="10"><?php echo static::e(isset($valores_antiguos['descripcion']) ? $valores_antiguos['descripcion'] : ''); ?></textarea>
+ <?php elseif($action===2): ?>
+ <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="10"><?php echo static::e(isset($tarea->descripcion) ? $tarea->descripcion : ''); ?></textarea>
+ <?php endif; ?>
+ <?php if($errores['descripcion']): ?>
+ <div class="alert alert-danger" role="alert">
+ <?php echo static::e($errores['descripcion']); ?>
+
+ </div>
+ <?php endif; ?>
+ </div>
+ <div class="form-row">
+ <div class="form-group col-6">
+ <label for="poblacion">Población</label>
+ <?php if($action===1): ?>
+ <input class="form-control" type="text" name="poblacion" id="poblacion" value="<?php echo static::e(isset($valores_antiguos['poblacion']) ? $valores_antiguos['poblacion'] : ''); ?>">
+ <?php elseif($action===2): ?>
+ <input class="form-control" type="text" name="poblacion" id="poblacion" value="<?php echo static::e(isset($tarea->poblacion) ? $tarea->poblacion : ''); ?>">
+ <?php endif; ?>
+ <?php if($errores['poblacion']): ?>
+ <div class="alert alert-danger" role="alert">
+ <?php echo static::e($errores['poblacion']); ?>
+
+ </div>
+ <?php endif; ?>
+ </div>
+ <div class="form-group col-2">
+ <label for="cp">Código Postal</label>
+ <?php if($action===1): ?>
+ <input class="form-control" type="text" name="cp" id="cp" value="<?php echo static::e(isset($valores_antiguos['cp']) ? $valores_antiguos['cp'] : ''); ?>">
+ <?php elseif($action===2): ?>
+ <input class="form-control" type="text" name="cp" id="cp" value="<?php echo static::e(isset($tarea->codigo_postal) ? $tarea->codigo_postal : ''); ?>">
+ <?php endif; ?>
+ <?php if($errores['cp']): ?>
+ <div class="alert alert-danger" role="alert">
+ <?php echo static::e($errores['cp']); ?>
+
+ </div>
+ <?php endif; ?>
+ </div>
+ <div class="form-group col-4">
+ <label for="provincia">Provincia</label>
+ <select class="form-control" name="provincia" id="provincia">
+ <?php $__currentLoopData = $provincias; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $provincia): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <?php if(($action == 2 and $provincia["id"] == $tarea->provincia) or ($valores_antiguos['provincia'] and $provincia['id'] == $valores_antiguos['provincia'])): ?>
+ <option value="<?php echo static::e($provincia['id']); ?>" selected><?php echo static::e($provincia['provincia']); ?></option>
+ <?php else: ?>
+ <option value="<?php echo static::e($provincia['id']); ?>"><?php echo static::e($provincia['provincia']); ?></option>
+ <?php endif; ?>
+
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ <?php if($errores['provincia']): ?>
+ <div class="alert alert-danger" role="alert">
+ <?php echo static::e($errores['provincia']); ?>
+
+ </div>
+ <?php endif; ?>
+ </div>
+ </div>
+ <div class="form-row">
+ <?php if($action===1): ?>
+ <div class="form-group col-6">
+ <?php else: ?>
+ <div class="form-group col-5">
+ <?php endif; ?>
+ <label for="persona_contacto">Persona de contacto</label>
+ <select class="form-control" name="persona_contacto" id="persona_contacto">
+ <option value=""> == SELECCIONA UNO == </option>
+ <?php $__currentLoopData = $usuarios; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $usuario): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <?php if($usuario->id == 0): ?>
+ <?php continue; ?>
+ <?php elseif(($action == 2 and $usuario->id == $tarea->persona_contacto) or (($valores_antiguos['persona_contacto'] and $action == 1) and $usuario->id == $valores_antiguos['persona_contacto'])): ?>
+ <option value="<?php echo static::e($usuario->id); ?>" selected><?php echo static::e($usuario->nombre); ?></option>
+ <?php else: ?>
+ <option value="<?php echo static::e($usuario->id); ?>"><?php echo static::e($usuario->nombre); ?></option>
+ <?php endif; ?>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ <?php if($errores['persona_contacto']): ?>
+ <div class="alert alert-danger" role="alert">
+ <?php echo static::e($errores['persona_contacto']); ?>
+
+ </div>
+ <?php endif; ?>
+ </select>
+ </div>
+ <?php if($action===1): ?>
+ <div class="form-group col-6">
+ <?php else: ?>
+ <div class="form-group col-5">
+ <?php endif; ?>
+ <label for="persona_encargada">Persona encargada de la tarea</label>
+ <select class="form-control" name="persona_encargada" id="persona_encargada">
+ <option value=""> == SELECCIONA UNO ==</option>
+ <?php $__currentLoopData = $usuarios; $this->addLoop($__currentLoopData); foreach($__currentLoopData as $usuario): $this->incrementLoopIndices(); $loop = $this->getFirstLoop(); ?>
+ <?php if(($action == 2 and $usuario->id == $tarea->persona_encargada) or ($valores_antiguos['persona_encargada'] and $usuario->id == $valores_antiguos['persona_encargada'])): ?>
+ <option value="<?php echo static::e($usuario->id); ?>" selected><?php echo static::e($usuario->nombre); ?></option>
+ <?php else: ?>
+ <option value="<?php echo static::e($usuario->id); ?>"><?php echo static::e($usuario->nombre); ?></option>
+ <?php endif; ?>
+ <?php endforeach; $this->popLoop(); $loop = $this->getFirstLoop(); ?>
+ </select>
+ </div>
+ <?php if($action===2): ?>
+ <div class="form-group col-2">
+ <label for="estado">Estado</label>
+ <select class="form-control" name="estado" id="estado">
+ <?php if($tarea->estado == 0): ?>
+ <option value="0" selected>Pendiente</option>
+ <option value="1">Completado</option>
+ <?php elseif($tarea->estado == 1): ?>
+ <option value="0">Pendiente</option>
+ <option value="1" selected>Completado</option>
+ <?php endif; ?>
+ </select>
+ </div>
+ <?php endif; ?>
+ </div>
+ <div class="form-row">
+ <div class="form-group col-6">
+ <label for="fecha_creacion">Fecha de creación</label>
+ <input class="form-control" type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo static::e(isset($tarea->fecha_creacion) ? $tarea->fecha_creacion : ''); ?>" readonly>
+ </div>
+ <div class="form-group col-6">
+ <label for="fecha_realizacion">Fecha de realización</label>
+ <?php if($action===1): ?>
+ <input class="form-control" type="text" name="fecha_realizacion" id="fecha_realizacion" value="<?php echo static::e(isset($valores_antiguos['fecha_realizacion']) ? $valores_antiguos['fecha_realizacion'] : ''); ?>">
+ <?php elseif($action===2): ?>
+ <input class="form-control" type="text" name="fecha_realizacion" id="fecha_realizacion" value="<?php echo static::e(isset($tarea->fecha_realizacion) ? $tarea->fecha_realizacion : ''); ?>">
+ <?php endif; ?>
+ <?php if($errores['fecha_realizacion']): ?>
+ <div class="alert alert-danger" role="alert">
+ <?php echo static::e($errores['fecha_realizacion']); ?>
+
+ </div>
+ <?php endif; ?>
+ </div>
+ </div>
+ <div class="form-row">
+ <div class="form-group col-6">
+ <label for="anotacion_anterior">Anotación anterior</label>
+ <?php if($action===1): ?>
+ <input class="form-control" type="text" name="anotacion_anterior" id="anotacion_anterior" value="<?php echo static::e(isset($valores_antiguos['anotacion_anterior']) ? $valores_antiguos['anotacion_anterior'] : ''); ?>">
+ <?php elseif($action===2): ?>
+ <input class="form-control" type="text" name="anotacion_anterior" id="anotacion_anterior" value="<?php echo static::e(isset($tarea->anotacion_anterior) ? $tarea->anotacion_anterior : ''); ?>">
+ <?php endif; ?>
+ </div>
+ <div class="form-group col-6">
+ <label for="anotacion_posterior">Anotación posterior</label>
+ <?php if($action===1): ?>
+ <input class="form-control" type="text" name="anotacion_posterior" id="anotacion_posterior" value="<?php echo static::e(isset($valores_antiguos['anotacion_posterior']) ? $valores_antiguos['anotacion_posterior'] : ''); ?>">
+ <?php elseif($action===2): ?>
+ <input class="form-control" type="text" name="anotacion_posterior" id="anotacion_posterior" value="<?php echo static::e(isset($tarea->anotacion_posterior) ? $tarea->anotacion_posterior : ''); ?>">
+ <?php endif; ?>
+ </div>
+ </div>
+ <button type="submit" class="btn btn-primary">
+ <?php if($action===1): ?>
+ Añadir
+ <?php else: ?>
+ Actualizar
+ <?php endif; ?>
+ </button>
+ </form>
+ </div>
+</div>
+
+<?php echo $this->runChild('General.pie'); ?>
+

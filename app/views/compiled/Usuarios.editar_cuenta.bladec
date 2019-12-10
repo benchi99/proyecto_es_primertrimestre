@@ -1,0 +1,39 @@
+<?php echo $this->runChild('General.cabecera'); ?>
+
+<style>
+ @import url(<?php  echo $this->relative("assets/css/estilo_form.css");?>)
+</style>
+
+<div class="row d-flex justify-content-center">
+ <?php echo $this->runChild('General.lateral'); ?>
+ <div class="col-8">
+ <nav aria-label="breadcrumb">
+ <ol class="breadcrumb">
+ <li class="breadcrumb-item"><a href="<?php  echo $this->relative('app/?a=11');?>">Usuarios</a></li>
+ <li class="breadcrumb-item active" aria-current="page">Editar mi cuenta</li>
+ </ol>
+ </nav>
+ <form action='<?php  echo $this->relative("app/index.php?a=8");?>' method="POST">
+ <input type="hidden" name="id" id="id" value="<?php echo static::e($usuario_editar->id); ?>">
+ <div class="form-row">
+ <div class="form-group col-4">
+ <label for="nombre_usuario">Nombre de usuario</label>
+ <input class="form-control" type="text" name="nombre_usuario" id="nombre_usuario" value="<?php echo static::e(isset($usuario_editar->nombre_usuario) ? $usuario_editar->nombre_usuario : ''); ?>">
+ </div>
+ <div class="form-group col-4">
+ <label for="pass">Contraseña</label>
+ <input class="form-control" type="password" name="pass" id="pass">
+ <small id="password_help" class="form-text text-muted">Si no quieres cambiar la contraseña, deja esto en blanco.</small>
+ </div>
+ <div class="form-group col-4">
+ <label for="email">E-mail</label>
+ <input class="form-control" type="text" name="email" id="email" placeholder="example@example.com" value="<?php echo static::e(isset($usuario_editar->email) ? $usuario_editar->email : ''); ?>">
+ </div>
+ </div>
+ <button type="submit" class="btn btn-primary">Actualizar</button>
+ </form>
+ </div>
+</div>
+
+<?php echo $this->runChild('General.pie'); ?>
+
