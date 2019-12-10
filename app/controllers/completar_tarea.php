@@ -1,5 +1,5 @@
 <?php
-$rol_requerido = 0;
+$rol_requerido = ROL_OPERARIO;
 
 include __DIR__.'/validacion_usuarios.php';
 
@@ -16,20 +16,22 @@ if (isset($_GET['task_id'])) {
             echo $blade->run('Error.error', [
                 'error' => 'Error al completar tarea: No se ha podido actualizar el dato. Contácta con el administrador.',
                 'usuario' => $nombre_usuario,
-                'sesion_iniciada' => $sesion_iniciada
+                'sesion_iniciada' => $sesion_iniciada,
+                'rol_actual' => intval($_SESSION['rol'])
             ]);
         } catch (Exception $e) {
             $e->getMessage();
         }
     } else {
-        header("Location:listar.php?status=4");
+        header("Location:index.php");
     }
 } else {
     try {
         echo $blade->run('Error.error', [
             'error' => 'Error al obtener tarea: No se ha especificado ID.',
             'usuario' => $nombre_usuario,
-            'sesion_iniciada' => $sesion_iniciada
+            'sesion_iniciada' => $sesion_iniciada,
+            'rol_actual' => intval($_SESSION['rol'])
         ]);
     } catch (Exception $e) {
         $e->getMessage();

@@ -85,6 +85,37 @@
     }
 
     /**
+     * Obtiene usuarios según un parámetro de búsqueda (usado en la barra de búsqueda)
+     * @param $query_string string Parametro de búsqueda
+     * @return array|bool|mysqli_result Resultado de consulta
+     * @throws Exception Error al construir objetos
+     */
+    function get_users($query_string) {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+        $param = $conexion->real_escape_string($query_string);  // Inyéctame esta quieres
+        $response_data = [];
+
+        $data = $conexion->query("SELECT usr_id FROM pryt1_usuarios WHERE usr_nombreusu like '%".$param."%' or
+                                usr_nombre like '%".$param."%' or
+                                usr_apellidos like '%".$param."%' or
+                                usr_tlf like '%".$param."%' or
+                                usr_email like '%".$param."%' or
+                                usr_direccion like '%".$param."%' or
+                                usr_rol like '%".$param."%'");
+
+        if (!$data) {
+            return $data;
+        } else {
+            while ($fila = $data->fetch_assoc()) {
+                array_push($response_data, new Usuario(['id' => $fila['usr_id']]));
+            }
+            return $response_data;
+        }
+
+    }
+
+    /**
      * Obtiene tareas según unos filtros especificados
      *
      * @param array $array Filtros.
@@ -141,5 +172,71 @@
             $fila = $consulta->fetch_assoc();
 
             return new Usuario(["id" => $fila['usr_id']]);
+        }
+    }
+
+    function get_provinces() {
+        $result_set = [];
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+
+        $consulta = $conexion->query("SELECT id, provincia FROM provincias");
+
+        if (!$consulta->num_rows) {
+            return false;
+        } else {
+            while ($fila = $consulta->fetch_assoc()) {
+                $provincia = [
+                    "id" => $fila['id'], "provincia" => utf8_encode($fila['provincia'])
+                ];
+
+                $result_set[] = $provincia;
+            }
+            return $result_set;
+        }
+    }
+
+    function get_town_id_by_name($town_name, $province_id) {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+
+        $consulta = $conexion->query("SELECT id FROM municipios WHERE provincia = '".$province_id."' AND municipio LIKE '%".$town_name."%'");
+
+        if (!$consulta->num_rows) {
+            return false;
+        } else {
+            $fila = $consulta->fetch_assoc();
+
+            return $fila['id'];
+        }
+    }
+
+    function get_province($id) {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+
+        $consulta = $conexion->query("SELECT provincia FROM provincias WHERE id = '".$id."'");
+
+        if (!$consulta->num_rows) {
+            return false;
+        } else {
+            $fila = $consulta->fetch_assoc();
+
+            return $fila['provincia'];
+        }
+    }
+
+    function get_town($province_id, $town_id) {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+
+        $consulta = $conexion->query("SELECT municipio FROM municipios WHERE id = '".$town_id."' AND provincia = '".$province_id."'");
+
+        if (!$consulta->num_rows) {
+            return false;
+        } else {
+            $fila = $consulta->fetch_assoc();
+
+            return $fila['municipio'];
         }
     }

@@ -1,0 +1,118 @@
+<?php echo $this->runChild('General.cabecera'); ?>
+
+<style>
+ @import url(<?php  echo $this->relative("assets/css/estilo_form.css");?>)
+</style>
+
+<div class="row d-flex justify-content-center">
+ <?php echo $this->runChild('General.lateral'); ?>
+ <div class="col-8">
+ <nav aria-label="breadcrumb">
+ <ol class="breadcrumb">
+ <li class="breadcrumb-item"><a href="<?php  echo $this->relative('app/?a=11');?>">Usuarios</a></li>
+ <?php if($action === 1): ?>
+ <li class="breadcrumb-item active" aria-current="page">Crear Usuario</li>
+ <?php else: ?>
+ <li class="breadcrumb-item active" aria-current="page">Editar Usuario</li>
+ <?php endif; ?>
+ </ol>
+ </nav>
+ <form action='<?php  echo $this->relative("app/index.php?a={$action}");?>' method="POST">
+ <?php if($action===6): ?>
+ <input type="hidden" name="id" id="id" value="<?php echo static::e($usuario_editar->id); ?>">
+ <?php endif; ?>
+ <div class="form-row">
+ <div class="form-group col-4">
+ <label for="nombre_usuario">Nombre de usuario</label>
+ <?php if($action===5): ?>
+ <input class="form-control" type="text" name="nombre_usuario" id="nombre_usuario" value="<?php echo static::e(isset($valores_antiguos['nombre_usuario']) ? $valores_antiguos['nombre_usuario'] : ''); ?>">
+ <?php elseif($action===6): ?>
+ <input class="form-control" type="text" name="nombre_usuario" id="nombre_usuario" value="<?php echo static::e(isset($usuario_editar->nombre_usuario) ? $usuario_editar->nombre_usuario : ''); ?>">
+ <?php endif; ?>
+ <?php if($errores['nombre_usuario']): ?>
+ <div class="alert alert-danger" role="alert">
+ <?php echo static::e($errores['nombre_usuario']); ?>
+
+ </div>
+ <?php endif; ?>
+ </div>
+ <div class="form-group col-4">
+ <label for="pass">Contraseña</label>
+ <input class="form-control" type="password" name="pass" id="pass">
+ <small id="password_help" class="form-text text-muted">Si no quieres cambiar la contraseña, deja esto en blanco.</small>
+ </div>
+ <div class="form-group col-4">
+ <label for="email">E-mail</label>
+ <?php if($action===5): ?>
+ <input class="form-control" type="text" name="email" id="email" placeholder="example@example.com" value="<?php echo static::e(isset($valores_antiguos['email']) ? $valores_antiguos['email'] : ''); ?>">
+ <?php elseif($action===6): ?>
+ <input class="form-control" type="text" name="email" id="email" placeholder="example@example.com" value="<?php echo static::e(isset($usuario_editar->email) ? $usuario_editar->email : ''); ?>">
+ <?php endif; ?>
+ </div>
+ </div>
+ <div class="form-row">
+ <div class="form-group col-4">
+ <label for="nombre">Nombre</label>
+ <?php if($action===5): ?>
+ <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo static::e(isset($valores_antiguos['nombre']) ? $valores_antiguos['nombre'] : ''); ?>">
+ <?php elseif($action===6): ?>
+ <input class="form-control" type="text" name="nombre" id="nombre" value="<?php echo static::e(isset($usuario_editar->nombre) ? $usuario_editar->nombre : ''); ?>">
+ <?php endif; ?>
+ </div>
+ <div class="form-group col-4">
+ <label for="apellidos">Apellidos</label>
+ <?php if($action===5): ?>
+ <input class="form-control" type="text" name="apellidos" id="apellidos" value="<?php echo static::e(isset($valores_antiguos['apellidos']) ? $valores_antiguos['apellidos'] : ''); ?>">
+ <?php elseif($action===6): ?>
+ <input class="form-control" type="text" name="apellidos" id="apellidos" value="<?php echo static::e(isset($usuario_editar->apellidos) ? $usuario_editar->apellidos : ''); ?>">
+ <?php endif; ?>
+ </div>
+ <div class="form-group col-4">
+ <label for="telefono">Teléfono</label>
+ <?php if($action===5): ?>
+ <input class="form-control" type="text" name="telefono" id="telefono" value="<?php echo static::e(isset($valores_antiguos['telefono']) ? $valores_antiguos['telefono'] : ''); ?>">
+ <?php elseif($action===6): ?>
+ <input class="form-control" type="text" name="telefono" id="telefono" value="<?php echo static::e(isset($usuario_editar->telefono) ? $usuario_editar->telefono : ''); ?>">
+ <?php endif; ?>
+ </div>
+ </div>
+ <div class="form-row">
+ <div class="form-group col-10">
+ <label for="direccion">Dirección</label>
+ <?php if($action===5): ?>
+ <input class="form-control" type="text" name="direccion" id="direccion" value="<?php echo static::e(isset($valores_antiguos['direccion']) ? $valores_antiguos['direccion'] : ''); ?>">
+ <?php elseif($action===6): ?>
+ <input class="form-control" type="text" name="direccion" id="direccion" value="<?php echo static::e(isset($usuario_editar->direccion) ? $usuario_editar->direccion : ''); ?>">
+ <?php endif; ?>
+ </div>
+ <div class="form-group col-2">
+ <label for="rol">Rol</label>
+ <select name="rol" id="rol" class="form-control">
+ <?php if($action===5): ?>
+ <option value="0">Operario</option>
+ <option value="1">Administrador</option>
+ <?php elseif($action===6): ?>
+ <?php if($usuario_editar->rol === 0): ?>
+ <option value="0" selected>Operario</option>
+ <option value="1">Administrador</option>
+ <?php else: ?>
+ <option value="0">Operario</option>
+ <option value="1" selected>Administrador</option>
+ <?php endif; ?>
+ <?php endif; ?>
+ </select>
+ </div>
+ </div>
+ <button type="submit" class="btn btn-primary">
+ <?php if($action===1): ?>
+ Añadir
+ <?php else: ?>
+ Actualizar
+ <?php endif; ?>
+ </button>
+ </form>
+ </div>
+</div>
+
+<?php echo $this->runChild('General.pie'); ?>
+

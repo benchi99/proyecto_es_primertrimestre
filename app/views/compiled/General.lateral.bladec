@@ -1,0 +1,12 @@
+<style>
+ @import url(<?php  echo $this->relative("assets/css/estilo_panel_lateral.css");?>)
+</style>
+
+<div class="listgroup text-center col-2 sidemenu border border-disabled rounded">
+ <h3 class="pt-1">Ir a</h3>
+ <a href="<?php  echo $this->relative('app/');?>" class="list-group-item list-group-item-action">Tareas</a>
+ <?php if($rol_actual === 1): ?>
+ <a href="<?php  echo $this->relative('app/?a=11');?>" class="list-group-item list-group-item-action">Usuarios</a>
+ <?php endif; ?>
+ <a href="<?php  echo $this->relative('app/?a=8');?>" class="list-group-item list-group-item-action">Editar mi cuenta</a>
+</div>

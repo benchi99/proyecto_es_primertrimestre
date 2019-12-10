@@ -6,6 +6,10 @@ define("USUARIO", "root");
 define("CONTRA", "");
 define("ESQUEMA", "proyecto_1trimestre");
 
+define("ROL_NOUSU", -1);
+define("ROL_OPERARIO", 0);
+define("ROL_ADMIN", 1);
+
 // CONFIGURACIÓN BLADEONE
 // TODO: probar y puede que sustituir BladeOne por Jessengers' Blade. https://github.com/jenssegers/blade
 // TODO: Instalar Composer e inicializar Composer en el proyecto.

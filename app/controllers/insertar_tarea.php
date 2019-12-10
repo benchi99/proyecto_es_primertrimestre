@@ -1,6 +1,6 @@
 <?php
 
-    $rol_requerido = 1;
+    $rol_requerido = ROL_ADMIN;
 
     include __DIR__.'/validacion_usuarios.php';
 
@@ -11,10 +11,12 @@
         try {
             echo $blade->run('Tareas.f_tareas', ["action" => 1,
                 "usuarios" => $usuarios,
+                "provincias" => $provincias,
                 "errores" => $errores,
                 "valores_antiguos" => $campos_insertados,
                 'usuario' => $nombre_usuario,
-                'sesion_iniciada' => $sesion_iniciada
+                'sesion_iniciada' => $sesion_iniciada,
+                'rol_actual' => intval($_SESSION['rol'])
             ]);
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -38,30 +40,30 @@
                 ]);
 
                 if ($tarea_nueva->commit_to_database()) {
-                    header("Location: listar.php?status=1");
+                    header("Location: index.php");
                 } else {
                     echo $blade->run('Error.error', [
                         'error' => 'La tarea no se ha insertado correctamente. Contacte con el administrador.',
                         'usuario' => $nombre_usuario,
-                        'sesion_iniciada' => $sesion_iniciada
+                        'sesion_iniciada' => $sesion_iniciada,
+                        'rol_actual' => intval($_SESSION['rol'])
                     ]);
                 }
-
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
-
-            // Enviar a ventana de éxito.
         } else {    // Los datos insertados no son correctos.
             $campos_insertados = todos_vp();
             try {
                 echo $blade->run('Tareas.f_tareas', [
                     "action" => 1,
                     "usuarios" => $usuarios,
+                    "provincias" => $provincias,
                     "errores" => $errores,
                     "valores_antiguos" => $campos_insertados,
                     'usuario' => $nombre_usuario,
-                    'sesion_iniciada' => $sesion_iniciada
+                    'sesion_iniciada' => $sesion_iniciada,
+                    'rol_actual' => intval($_SESSION['rol'])
                 ]);
             } catch (Exception $e) {
                 echo $e->getMessage();

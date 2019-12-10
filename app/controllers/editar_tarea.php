@@ -1,5 +1,5 @@
 <?php
-$rol_requerido = 1;
+$rol_requerido = ROL_ADMIN;
 
 include __DIR__.'/validacion_usuarios.php';
 
@@ -16,10 +16,12 @@ if (isset($_GET['task_id']) || isset($_POST['id'])) {
                 "action" => 2,
                 "tarea" => $tarea,
                 "usuarios" => $usuarios,
+                "provincias" => $provincias,
                 "errores" => $errores,
                 "valores_antiguos" => $campos_insertados,
                 'usuario' => $nombre_usuario,
-                'sesion_iniciada' => $sesion_iniciada
+                'sesion_iniciada' => $sesion_iniciada,
+                'rol_actual' => intval($_SESSION['rol'])
             ]);
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -34,37 +36,38 @@ if (isset($_GET['task_id']) || isset($_POST['id'])) {
         }
 
         // TODO: posiblemente encapsular esto dentro del modelo de la tarea.
-        $tarea->descripcion = $_POST['descripcion'];
-        $tarea->poblacion = $_POST['poblacion'];
-        $tarea->codigo_postal = $_POST['cp'];
-        $tarea->provincia = $_POST['provincia'];
-        $tarea->persona_contacto = $_POST['persona_contacto'];
-        $tarea->estado = $_POST['estado'];
-        $tarea->fecha_creacion = $_POST['fecha_creacion'];
-        $tarea->persona_encargada = $_POST['persona_encargada'];
-        $tarea->fecha_realizacion = DateTime::createFromFormat('d-m-Y', $_POST['fecha_realizacion'])->format('Y-m-d');
-        $tarea->anotacion_anterior = $_POST['anotacion_anterior'];
-        $tarea->anotacion_posterior = $_POST['anotacion_posterior'];
+        $tarea->descripcion = vp('descripcion');
+        $tarea->poblacion = vp('poblacion');
+        $tarea->codigo_postal = vp('cp');
+        $tarea->provincia = vp('provincia');
+        $tarea->persona_contacto = vp('persona_contacto');
+        $tarea->estado = vp('estado');
+        $tarea->fecha_creacion = vp('fecha_creacion');
+        $tarea->persona_encargada = vp('persona_encargada');
+        $tarea->fecha_realizacion = DateTime::createFromFormat('d-m-Y', vp('fecha_realizacion'))->format('Y-m-d');
+        $tarea->anotacion_anterior = vp('anotacion_anterior');
+        $tarea->anotacion_posterior = vp('anotacion_posterior');
 
         if (valida_datos()) { // Los datos a editar son válidos
             try {
                 $estado = $tarea->commit_to_database();
 
                 if ($estado) {
-                    header("Location:listar.php?status=2");
+                    header("Location:index.php");
                 } else {
                     try {
                         echo $blade->run('Error.error', [
                             'error' => 'Error al actualizar tarea: No se ha podido actualizar el dato. Contácta con el administrador.',
                             'usuario' => $nombre_usuario,
-                            'sesion_iniciada' => $sesion_iniciada
+                            'sesion_iniciada' => $sesion_iniciada,
+                            'rol_actual' => intval($_SESSION['rol'])
                         ]);
                     } catch (Exception $e) {
-                        $e->getMessage();
+                        echo $e->getMessage();
                     }
                 }
             } catch (Exception $e) {
-                $e->getMessage();
+                echo $e->getMessage();
             }
 
         } else { // Los datos a editar NO son válidos.
@@ -74,13 +77,15 @@ if (isset($_GET['task_id']) || isset($_POST['id'])) {
                     "action" => 2,
                     "tarea" => $tarea,
                     "usuarios" => $usuarios,
+                    "provincias" => $provincias,
                     "errores" => $errores,
                     "valores_antiguos" => $campos_insertados,
                     'usuario' => $nombre_usuario,
-                    'sesion_iniciada' => $sesion_iniciada
+                    'sesion_iniciada' => $sesion_iniciada,
+                    'rol_actual' => intval($_SESSION['rol'])
                 ]);
             } catch (Exception $e) {
-                $e->getMessage();
+                echo $e->getMessage();
             }
         }
     }
@@ -89,10 +94,11 @@ if (isset($_GET['task_id']) || isset($_POST['id'])) {
         echo $blade->run('Error.error', [
             'error' => 'Error al obtener tarea: No se ha especificado ID.',
             'usuario' => $nombre_usuario,
-            'sesion_iniciada' => $sesion_iniciada
+            'sesion_iniciada' => $sesion_iniciada,
+            'rol_actual' => intval($_SESSION['rol'])
         ]);
     } catch (Exception $e) {
-        $e->getMessage();
+        echo $e->getMessage();
     }
 }
 

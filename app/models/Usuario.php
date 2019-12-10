@@ -25,11 +25,16 @@ class Usuario implements iDBTemplate
         }
 
     }
-    
+
+    /**
+     * Construye usuario a partir de todos sus datos
+     *
+     * @param $data array datos de usuario
+     */
     private function __construye_todos_params($data)
     {
         if (isset($data['id'])) {
-            $this->id = $data['id'];
+            $this->id = intval($data['id']);
         }
         $this->nombre_usuario = $data['nombre_usuario'];
         $this->pass = $data['pass'];
@@ -41,9 +46,15 @@ class Usuario implements iDBTemplate
         $this->rol = $data['rol'];
     }
 
+    /**
+     *  Construye usuario a partir de id en base de datos
+     *
+     * @param $id int Id de usuario
+     * @throws Exception Error al construir objeto usuario
+     */
     private function __construye_desde_id($id)
     {
-        $this->id = $id;
+        $this->id = intval($id);
 
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
@@ -55,8 +66,8 @@ class Usuario implements iDBTemplate
             while ($fila = $consulta->fetch_assoc()) {
                 $this->nombre_usuario = $fila['usr_nombreusu'];
                 $this->pass = $fila['usr_password'];
-                $this->nombre = $fila['usr_nombre'];
-                $this->apellidos = $fila['usr_apellidos'];
+                $this->nombre = utf8_encode($fila['usr_nombre']);
+                $this->apellidos = utf8_encode($fila['usr_apellidos']);
                 $this->telefono = $fila['usr_tlf'];
                 $this->email = $fila['usr_email'];
                 $this->direccion = $fila['usr_direccion'];
@@ -65,27 +76,12 @@ class Usuario implements iDBTemplate
         }
     }
 
-    public function get_full_name()
-    {
-        return $this->nombre . ' ' . $this->apellidos;
-    }
-
-    public function get_user_tasks()
-    {
-        $bd = bd_gest::get_instance();
-        $conexion = $bd->get_connection();
-        $result = [];
-
-        $ids = $conexion->query("SELECT tsk_id FROM pryt1_tarea 
-                                      WHERE tsk_persona_encargada = " . $this->id);
-
-        while ($fila = $ids->fetch_assoc()) {
-            array_push($result, new Tarea($ids['tsk_id']));
-        }
-
-        return $result;
-    }
-
+    /**
+     * Comprueba si vienen todos los datos insertados
+     *
+     * @param $data array datos de usuario
+     * @return bool True si vienen todos, false si no.
+     */
     private function __vienen_todos_los_datos($data)
     {
         return isset($data['nombre_usuario']) &&
@@ -98,6 +94,12 @@ class Usuario implements iDBTemplate
             isset($data['rol']);
     }
 
+    /**
+     * Inserta o actualiza usuario en base de datos.
+     *
+     * @return bool|mysqli_result mysqli_result si se ha insertado/actualizado correctamente, false si no
+     * @throws Exception error al insertar/actualizar dato.
+     */
     public function commit_to_database()
     {
         $bd = bd_gest::get_instance();
@@ -126,26 +128,29 @@ class Usuario implements iDBTemplate
                 $resultado = $conexion->query('UPDATE pryt1_usuarios SET 
                        usr_nombreusu = \'' . $this->nombre_usuario . '\', 
                        usr_password = \'' . $this->pass . '\', 
-                       usr_nombre = ' . $this->nombre . ', 
+                       usr_nombre = \'' . $this->nombre . '\', 
                        usr_apellidos = \'' . $this->apellidos . '\', 
                        usr_tlf = ' . $this->telefono . ', 
-                       usr_email = ' . $this->email . ', 
-                       usr_direccion = ' . $this->direccion . ', 
-                       usr_rol = \'' . $this->rol . '\', 
+                       usr_email = \'' . $this->email . '\', 
+                       usr_direccion = \'' . $this->direccion . '\', 
+                       usr_rol = ' . $this->rol . ' 
                    WHERE usr_id = ' . $this->id);
 
                 if (!$resultado) {
                     throw new Exception("There was an error updating your data:" . $conexion->error . " (" . $conexion->errno . ")");
                 }
-
                 return $resultado;
             } else {
                 throw new Exception("There has been an error updating this task: task id '" . $this->id . "'' does not exist in DB.");
             }
         }
-
     }
 
+    /**
+     * Elimina usuario.
+     *
+     * @return bool|mysqli_result mysqli_result si se ha eliminado correctamente, false si no.
+     */
     public function delete()
     {
         $bd = bd_gest::get_instance();
