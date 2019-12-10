@@ -29,10 +29,11 @@
                 $usuario = new Usuario(['id' => vp('id')]);
 
                 // Si ha modificado el nombre de usuario, está ya en uso?
-                if (vp('nombre_usuario') && obtain_user_by_username(vp('nombre_usuario'))) {
+                if (vp('nombre_usuario') && (obtain_user_by_username(vp('nombre_usuario')) != $usuario)) {
                     $errores['nombre_usuario'] = "Este nombre de usuario ya está en uso.";
                     $campos_insertados = todos_vp();
-                    echo $blade->run('Usuarios.f_cuenta', [
+                    echo $blade->run('Usuarios.f_usuario', [
+                        'action' => 6,
                         'usuario_editar' => $usuario,
                         'usuario' => $nombre_usuario,
                         'errores' => $errores,

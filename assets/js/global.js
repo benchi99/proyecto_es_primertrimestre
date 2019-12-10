@@ -1,4 +1,4 @@
-const URL = "http://localhost/ES/proyecto_es_primertrimestre/";  // TODO: CAMBIAR AL PONER EN PRODUCCION
+const URL = "http://localhost/ES/proyecto_es_primertrimestre/";  // Define URL !!!!!! CAMBIAR ESTO A TU RUTA ABSOLUTA EN TU SERVIDOR !!!!!!
 
 function rellenaProvincias(datos) {
     let htmlContent = '<option value="-1"> </option>';
