@@ -24,7 +24,7 @@
                 </ul>
             </div>
             <form class="form-inline" method="get">
-                <input type="hidden" name="a" id="a" value="8">
+                <input type="hidden" name="a" id="a" value="11">
                 <input class="form-control mr-sm-2" type="search" name="querystr" placeholder="Buscar..." aria-label="Buscar"
                        value="{{$querystr or ''}}">
                 <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Buscar</button>
@@ -65,9 +65,9 @@
                             </td>
                             <td>
                                 @if ($usuario->id != 0)
-                                <a href='#'>
+                                <a href='@relative("app/?a=6&user_id={$usuario->id}")'>
                                     <i class="fas fa-edit"></i> Editar</a><br>
-                                <a href='#'>
+                                <a href='@relative("app/?a=7&user_id={$usuario->id}")'>
                                     <i class="fas fa-eraser"></i> Eliminar</a><br>
                                 @endif
                             </td>

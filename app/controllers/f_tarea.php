@@ -29,6 +29,7 @@ $campos_insertados = [
 
 try {
     $usuarios = obtain_all_users();
+    $provincias = get_provinces();
 } catch (Exception $e) {
     echo $e->getMessage();
 }

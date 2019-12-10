@@ -11,9 +11,11 @@
             try {
                 $usuario = new Usuario(['id' => vg('user_id')]);
                 echo $blade->run('Usuarios.f_usuario', [
-                    'action' => 2,
+                    'action' => 6,
                     'usuario_editar' => $usuario,
                     'usuario' => $nombre_usuario,
+                    'errores' => $errores,
+                    'valores_antiguos' => $campos_insertados,
                     'sesion_iniciada' => $sesion_iniciada,
                     'rol_actual' => intval($_SESSION['rol'])
                 ]);
@@ -25,6 +27,22 @@
             // Obtener tarea y editar
             try {
                 $usuario = new Usuario(['id' => vp('id')]);
+
+                // Si ha modificado el nombre de usuario, está ya en uso?
+                if (vp('nombre_usuario') && obtain_user_by_username(vp('nombre_usuario'))) {
+                    $errores['nombre_usuario'] = "Este nombre de usuario ya está en uso.";
+                    $campos_insertados = todos_vp();
+                    echo $blade->run('Usuarios.f_cuenta', [
+                        'usuario_editar' => $usuario,
+                        'usuario' => $nombre_usuario,
+                        'errores' => $errores,
+                        'valores_antiguos' => $campos_insertados,
+                        'sesion_iniciada' => $sesion_iniciada,
+                        'rol_actual' => intval($_SESSION['rol'])
+                    ]);
+                    exit;
+                }
+
             } catch (Exception $e) {
                 echo $e->getMessage();
             }
@@ -42,7 +60,7 @@
 
             try {
                 if ($usuario->commit_to_database()) {
-                    header('Location:index.php?a=8');
+                    header('Location:index.php?a=11');
                 } else {
                     echo $blade->run('Error.error', [
                         'error' => 'Error al actualizar usuario: no se ha podido actualizar el dato. Contácta con el administrador.',

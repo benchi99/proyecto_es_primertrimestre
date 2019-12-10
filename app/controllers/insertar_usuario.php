@@ -10,7 +10,7 @@
         // Ir a formulario.
         try {
             echo $blade->run('Usuarios.f_usuario', [
-               "action" => 1,
+               "action" => 5,
                "usuario" => $nombre_usuario,
                "sesion_iniciada" => $sesion_iniciada,
                "rol_actual" => intval($_SESSION['rol'])
@@ -33,7 +33,7 @@
             ]);
 
             if ($usuario_nuevo->commit_to_database()) {
-                header('Location:index.php?a=8');
+                header('Location:index.php?a=11');
             } else {
                 echo $blade->run('Error.error', [
                     'error' => 'El usuario no ha sido insertado correctamente. Contacte con el administrador.',

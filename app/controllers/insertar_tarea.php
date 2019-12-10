@@ -11,6 +11,7 @@
         try {
             echo $blade->run('Tareas.f_tareas', ["action" => 1,
                 "usuarios" => $usuarios,
+                "provincias" => $provincias,
                 "errores" => $errores,
                 "valores_antiguos" => $campos_insertados,
                 'usuario' => $nombre_usuario,
@@ -57,6 +58,7 @@
                 echo $blade->run('Tareas.f_tareas', [
                     "action" => 1,
                     "usuarios" => $usuarios,
+                    "provincias" => $provincias,
                     "errores" => $errores,
                     "valores_antiguos" => $campos_insertados,
                     'usuario' => $nombre_usuario,

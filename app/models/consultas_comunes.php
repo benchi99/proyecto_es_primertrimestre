@@ -174,3 +174,69 @@
             return new Usuario(["id" => $fila['usr_id']]);
         }
     }
+
+    function get_provinces() {
+        $result_set = [];
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+
+        $consulta = $conexion->query("SELECT id, provincia FROM provincias");
+
+        if (!$consulta->num_rows) {
+            return false;
+        } else {
+            while ($fila = $consulta->fetch_assoc()) {
+                $provincia = [
+                    "id" => $fila['id'], "provincia" => utf8_encode($fila['provincia'])
+                ];
+
+                $result_set[] = $provincia;
+            }
+            return $result_set;
+        }
+    }
+
+    function get_town_id_by_name($town_name, $province_id) {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+
+        $consulta = $conexion->query("SELECT id FROM municipios WHERE provincia = '".$province_id."' AND municipio LIKE '%".$town_name."%'");
+
+        if (!$consulta->num_rows) {
+            return false;
+        } else {
+            $fila = $consulta->fetch_assoc();
+
+            return $fila['id'];
+        }
+    }
+
+    function get_province($id) {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+
+        $consulta = $conexion->query("SELECT provincia FROM provincias WHERE id = '".$id."'");
+
+        if (!$consulta->num_rows) {
+            return false;
+        } else {
+            $fila = $consulta->fetch_assoc();
+
+            return $fila['provincia'];
+        }
+    }
+
+    function get_town($province_id, $town_id) {
+        $bd = bd_gest::get_instance();
+        $conexion = $bd->get_connection();
+
+        $consulta = $conexion->query("SELECT municipio FROM municipios WHERE id = '".$town_id."' AND provincia = '".$province_id."'");
+
+        if (!$consulta->num_rows) {
+            return false;
+        } else {
+            $fila = $consulta->fetch_assoc();
+
+            return $fila['municipio'];
+        }
+    }

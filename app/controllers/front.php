@@ -10,10 +10,14 @@ define('IT', '1');
 define('ET', '2');
 define('DT', '3');
 define('CT', '4');
-define('FU', '5');
-define('LG', '6');
-define('CS', '7');
-define('LU', '8');
+//define('FU', '5');
+define('IU', '5');
+define('EU', '6');
+define('DU', '7');
+define('EA', '8');
+define('LG', '9');
+define('CS', '10');
+define('LU', '11');
 
 $mapa_controladores = [
     LT => 'listar_tarea',
@@ -21,7 +25,11 @@ $mapa_controladores = [
     ET => 'editar_tarea',
     DT => 'eliminar_tarea',
     CT => 'completar_tarea',
-    FU => 'f_usuario',
+//    FU => 'f_usuario',
+    IU => 'insertar_usuario',
+    EU => 'editar_usuario',
+    DU => 'eliminar_usuario',
+    EA => 'editar_cuenta',
     LG => 'login',
     CS => 'cerrar_sesion',
     LU => 'listar_usuario'

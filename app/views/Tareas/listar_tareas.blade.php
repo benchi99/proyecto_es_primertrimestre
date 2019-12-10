@@ -119,7 +119,7 @@
                             <td>{{ $tarea->poblacion }}</td>
                             <td>
                                 @foreach($usuarios as $usuario)
-                                    @if($usuario->id === $tarea->persona_contacto)
+                                    @if($usuario->id == $tarea->persona_contacto)
                                         {{ $usuario->nombre }}
                                     @endif
                                 @endforeach
@@ -134,7 +134,7 @@
                             <td>{{ $tarea->fecha_creacion }}</td>
                             <td>
                                 @foreach($usuarios as $usuario)
-                                    @if($usuario->id === $tarea->persona_encargada)
+                                    @if($usuario->id == $tarea->persona_encargada)
                                         {{ $usuario->nombre }}
                                     @endif
                                 @endforeach

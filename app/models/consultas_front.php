@@ -1,12 +1,13 @@
 <?php
 require_once __DIR__ . '/bd_gest.php';
+require_once __DIR__ . '/utils.php';
 require_once __DIR__ . '/../config.php';
 
 if (!$_GET) {
     echo "No viene nada por GET!";
 } else {
-    if (isset($_GET['querytype'])) {
-        switch ($_GET['querytype']) {
+    if (vg('querytype')) {
+        switch (vg('querytype')) {
             case "all":
                 $datos = [];
 
@@ -27,12 +28,16 @@ if (!$_GET) {
                 }
                 break;
             case "municipios":
-                if (isset($_GET['provincia'])) {
-                    $municipios = consulta_tabla("municipio", $_GET['provincia']);
+                if (vg('provincia')) {
+                    $municipios = consulta_tabla("municipio", vg('provincia'));
                     echo json_encode($municipios);
                 } else {
                     return "No se ha especificado provincia!";
                 }
+                break;
+            case "provincias":
+                $provincias = consulta_tabla("provincia", null);
+                echo json_encode($provincias);
                 break;
             default:
                 echo "No viene nada por GET!";

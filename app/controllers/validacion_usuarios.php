@@ -6,7 +6,7 @@ $sesion_iniciada = false;
 $nombre_usuario = null;
 
 if (!$_SESSION) {
-    header('Location:index.php?a=6');
+    header('Location:index.php?a=9');
 } else if ($_SESSION['rol'] < $rol_requerido) {
     try {
         $sesion_iniciada = true;

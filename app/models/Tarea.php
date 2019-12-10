@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/iDBTemplate.php';
 require_once __DIR__ . '/bd_gest.php';
+require_once __DIR__ . '/consultas_comunes.php';
 
 class Tarea implements iDBTemplate
 {
@@ -28,6 +29,11 @@ class Tarea implements iDBTemplate
         }
     }
 
+    /**
+     * Construye tarea a partir de todos sus datos
+     *
+     * @param $data array Datos de tarea
+     */
     private function __construye_todos_params($data)
     {
         if (isset($data['id'])) {
@@ -46,6 +52,12 @@ class Tarea implements iDBTemplate
         $this->anotacion_posterior = $data['anotacion_posterior'];
     }
 
+    /**
+     * Construye Tarea a partir de ID y base de datos.
+     *
+     * @param $id int ID de tarea.
+     * @throws Exception Error al construir tarea.
+     */
     private function __construye_desde_id($id)
     {
         $this->id = intval($id);
@@ -60,7 +72,7 @@ class Tarea implements iDBTemplate
         } else {
             while ($fila = $consulta->fetch_assoc()) {
                 $this->descripcion = $fila['tsk_descripcion'];
-                $this->poblacion = $fila['tsk_poblacion'];
+                $this->poblacion = get_town($fila['tsk_provincia'], $fila['tsk_poblacion']);
                 $this->codigo_postal = $fila['tsk_cp'];
                 $this->provincia = $fila['tsk_provincia'];
                 $this->persona_contacto = $fila['tsk_persona_contacto'];
@@ -89,10 +101,22 @@ class Tarea implements iDBTemplate
             isset($data['anotacion_posterior']);
     }
 
+    /**
+     * Inserta o actualiza la Tarea
+     *
+     * @return bool|mysqli_result mysqli_result si la operacion se ha realizado correctamente, false si no.
+     * @throws Exception Error al interpretar/insertar/actualizar Tarea
+     */
     public function commit_to_database()
     {
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();
+
+        if (!is_nan($this->poblacion)) {
+            $this->poblacion = get_town_id_by_name($this->poblacion, $this->provincia);
+        } else {
+            throw new Exception("There has been an error updating this task: no town id inserted");
+        }
 
         if (!$this->id) {
             // Vamos a insertar
@@ -141,6 +165,11 @@ class Tarea implements iDBTemplate
         }
     }
 
+    /**
+     * Elimina la Tarea.
+     *
+     * @return bool|mysqli_result mysqli_result si se ha eliminado correctamente, false si no.
+     */
     public function delete()
     {
         $bd = bd_gest::get_instance();
@@ -151,6 +180,11 @@ class Tarea implements iDBTemplate
         return $resultado;
     }
 
+    /**
+     * Completa la tarea.
+     *
+     * @return bool|mysqli_result mysqli_result si se ha completado correctamente, false si no.
+     */
     public function complete_task() {
         $bd = bd_gest::get_instance();
         $conexion = $bd->get_connection();

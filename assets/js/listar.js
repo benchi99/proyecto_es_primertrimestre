@@ -18,17 +18,6 @@ function rellenaSelects(data) {
     rellenaProvincias(datos[1]);
 }
 
-function rellenaProvincias(datos) {
-    let htmlContent = '<option value="-1"> </option>';
-
-    for (let dato of datos) {
-        let provincia = JSON.parse(dato);
-        htmlContent += '<option value="'+provincia.id+'">' + provincia.provincia + '</option>';
-    }
-
-    $('#provincias').html(htmlContent);
-}
-
 function rellenarUsuarios(nombre, datos) {
     let htmlContent = '<option value="-1"> </option>';
 
@@ -50,21 +39,3 @@ function rellenarUsuarios(nombre, datos) {
     $('#'+nombre).html(htmlContent);
 }
 
-function actualizaSelectMunicipios(provincia) {
-    $.ajax({
-       url: URL + 'app/controllers/consultas_front.php?querytype=municipios&provincia=' + provincia,
-        method: 'GET',
-        dataType: 'json',
-        complete: (response) => {
-            let htmlContent = '', datos = JSON.parse(response.responseText);
-
-            for (let dato of datos) {
-                let dato_json = JSON.parse(dato);
-                htmlContent += '<option value="' + dato_json.id + '">' + dato_json.municipio + '</option>';
-            }
-
-            $('#poblaciones').removeAttr("disabled");
-            $('#poblaciones').html(htmlContent);
-        }
-    });
-}

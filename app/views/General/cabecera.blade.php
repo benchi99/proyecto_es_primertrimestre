@@ -38,14 +38,14 @@
             <span class="navbar-text">Hola, {{ $usuario }}.</span>
         </li>
         <li class="navbar-item">
-            <a href="?a=7" class="nav-link text-white">Cerrar sesión</a>
+            <a href="?a=10" class="nav-link text-white">Cerrar sesión</a>
         </li>
     @else
         <li class="navbar-item">
             <span class="navbar-text">Hola, invitado.</span>
         </li>
         <li class="navbar-item">
-            <a href="?a=6" class="nav-link text-white">Iniciar sesión</a>
+            <a href="?a=9" class="nav-link text-white">Iniciar sesión</a>
         </li>
     @endif
     </ul>
